@@ -287,13 +287,12 @@
       }
 
       .proverb-details {
-  display: inline-block;
-  max-width: 0;
-  overflow: hidden;
-  transition: max-width 0.5s var(--transition-bezier);
-  white-space: nowrap;
-}
-
+        display: inline-block;
+        max-width: 0;
+        overflow: hidden;
+        transition: max-width 0.5s var(--transition-bezier);
+        white-space: nowrap;
+      }
 
       .proverb-container:hover .proverb-details {
         max-width: 300px;
@@ -311,23 +310,20 @@
       }
 
       .proverb-meaning {
-  font-family: "Noto Sans HK", sans-serif;
-  font-size: 0.8rem;
-  color: var(--ink-blue);
-  transform: translateX(-20px);
-  opacity: 0;
-  transition: all 0.5s var(--transition-bezier);
-  transition-delay: 0.2s;
-}
+        font-family: "Noto Sans HK", sans-serif;
+        font-size: 0.8rem;
+        color: var(--ink-blue);
+        transform: translateX(-20px);
+        opacity: 0;
+        transition: all 0.5s var(--transition-bezier);
+        transition-delay: 0.2s;
+      }
 
-
-
-.proverb-container:hover .proverb-pinyin,
-.proverb-container:hover .proverb-meaning {
-  transform: translateX(0);
-  opacity: 1;
-}
-
+      .proverb-container:hover .proverb-pinyin,
+      .proverb-container:hover .proverb-meaning {
+        transform: translateX(0);
+        opacity: 1;
+      }
 
       /* Character with translation tooltip */
       .character-tooltip-container {
@@ -433,7 +429,7 @@
         border-radius: 50%;
         border: 1.5px solid white;
         transform: translate(-50%, -50%);
-        transition: all 0.3s var(--transition-bezier);
+        transition: all 0s var(--transition-bezier);
         will-change: transform;
       }
 
@@ -692,25 +688,7 @@
         animation-delay: 2s;
       }
 
-      /* Label for droplets */
-      .droplet-label {
-        position: absolute;
-        background-color: white;
-        padding: 8px 15px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--ink-blue);
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.3s var(--transition-bezier);
-        pointer-events: none;
-      }
-
-      .ink-droplet:hover + .droplet-label {
+      .ink-droplet:hover {
         opacity: 1;
         transform: translateY(0);
       }
@@ -882,13 +860,16 @@
         border-radius: 10px;
       }
 
-      /* Projects hexagon grid */
+      /* Red Envelope Projects Section Styles */
+
+      /* Projects container */
       .projects-container {
         margin-top: 20px;
         position: relative;
       }
 
-      .projects-grid {
+      /* Red Envelopes Grid */
+      .red-envelopes-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 40px;
@@ -898,97 +879,369 @@
         transition-delay: 0.6s;
       }
 
-      .content-card.active .projects-grid {
+      .content-card.active .red-envelopes-grid {
         opacity: 1;
         transform: translateY(0);
       }
 
-      .project-item {
+      /* Red Envelope Wrapper */
+      .red-envelope-wrapper {
         position: relative;
-        height: 0;
-        padding-bottom: 115%; /* Creates hexagon aspect ratio */
-        clip-path: polygon(
-          50% 0%,
-          100% 25%,
-          100% 75%,
-          50% 100%,
-          0% 75%,
-          0% 25%
-        );
-        background-color: white;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        perspective: 1200px;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s var(--transition-bezier);
+        transition-delay: calc(0.6s + (var(--delay) * 0.2s));
+      }
+
+      .content-card.active .red-envelope-wrapper {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Red Envelope */
+      .red-envelope {
+        position: relative;
+        width: 100%;
+        height: 280px;
+        background-color: var(--ink-red);
+        border-radius: 8px;
         overflow: hidden;
-        transition: all 0.5s var(--transition-bezier);
+        transform-style: preserve-3d;
+        box-shadow: 0 15px 25px rgba(156, 44, 65, 0.2);
+        transition: transform 0.8s var(--transition-bezier);
       }
 
-      .project-item:hover {
-        transform: translateY(-10px) scale(1.05);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      .red-envelope-wrapper:hover .red-envelope {
+        transform: rotateX(5deg) rotateY(-5deg) translateY(-15px);
+        box-shadow: 0 25px 35px rgba(156, 44, 65, 0.3);
       }
 
-      .project-content {
+      /* Envelope Front */
+      .envelope-front {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 15%;
-        text-align: center;
-        background-color: rgba(255, 255, 255, 0.9);
-        opacity: 0;
-        transition: all 0.4s var(--transition-bezier);
+        background: linear-gradient(135deg, #d02a2a, #8c1e1e);
+        border-radius: 8px;
+        z-index: 2;
+        transform-origin: center bottom;
+        transition: transform 0.8s var(--transition-bezier);
+        overflow: hidden;
       }
 
-      .project-item:hover .project-content {
-        opacity: 1;
+      .red-envelope-wrapper:hover .envelope-front {
+        transform: rotateX(-110deg);
       }
 
-      .project-image {
+      /* Envelope Flap (inside) */
+      .envelope-flap {
         position: absolute;
         top: 0;
         left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #f5e8e8;
+        border-radius: 8px;
+        z-index: 1;
+        transform-origin: center top;
+        transform: rotateX(180deg);
+        transition: transform 0.6s var(--transition-bezier) 0.2s;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .red-envelope-wrapper:hover .envelope-flap {
+        transform: rotateX(0);
+      }
+
+      /* Envelope Card (Project Content) */
+      .envelope-card {
+        position: absolute;
+        top: 5%;
+        left: 5%;
+        width: 90%;
+        height: 90%;
+        background-color: white;
+        border-radius: 6px;
+        z-index: 0; /* This stays at 0 */
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s var(--transition-bezier) 0.4s,
+          transform 0.5s var(--transition-bezier) 0.4s;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .red-envelope-wrapper:hover .envelope-card {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Envelope Seal */
+      .envelope-seal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background-color: #f5d742;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        transition: all 0.5s var(--transition-bezier);
+        z-index: 3;
+      }
+
+      .red-envelope-wrapper:hover .envelope-seal {
+        transform: translate(-50%, -50%) scale(0.8) rotate(10deg);
+        opacity: 0.8;
+      }
+
+      .seal-character {
+        font-family: "Ma Shan Zheng", cursive;
+        font-size: 2rem;
+        color: #d02a2a;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Envelope Decorative Patterns */
+      .envelope-pattern {
+        position: absolute;
+        width: 60px;
+        height: 120px;
+        background-color: rgba(255, 215, 0, 0.1);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M20,0 L40,20 L20,40 L0,20 Z' fill='none' stroke='%23f5d742' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E");
+        background-size: 20px 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .envelope-pattern.left {
+        left: 10px;
+        border-radius: 30px 0 0 30px;
+      }
+
+      .envelope-pattern.right {
+        right: 10px;
+        border-radius: 0 30px 30px 0;
+      }
+
+      /* Project Content */
+      .project-content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .project-title {
+        font-family: "Noto Serif SC", serif;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--ink-blue);
+        margin-bottom: 12px;
+        position: relative;
+      }
+
+      .project-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 40px;
+        height: 2px;
+        background-color: var(--gold);
+      }
+
+      .project-image-container {
+        width: 100%;
+        height: 120px;
+        margin-bottom: 12px;
+        overflow: hidden;
+        border-radius: 4px;
+      }
+
+      .project-image {
         width: 100%;
         height: 100%;
         object-fit: cover;
         transition: transform 0.5s var(--transition-bezier);
       }
 
-      .project-item:hover .project-image {
+      .envelope-card:hover .project-image {
         transform: scale(1.1);
       }
 
-      .project-title {
-        color: var(--ink-blue);
-        font-size: 1.3rem;
-        font-weight: 500;
-        margin-bottom: 10px;
-        position: relative;
-        transform: translateY(20px);
-        opacity: 0;
-        transition: all 0.4s var(--transition-bezier);
-        transition-delay: 0.1s;
-      }
-
       .project-description {
+        font-size: 0.85rem;
         color: var(--ink-blue);
-        font-size: 0.9rem;
-        transform: translateY(20px);
+        line-height: 1.5;
+        margin-bottom: 12px;
+        flex-grow: 1;
+      }
+
+      /* Project tags */
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .project-tag {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        background-color: rgba(42, 129, 118, 0.1);
+        color: var(--jade);
+        border-radius: 4px;
+      }
+
+      /* Featured Project Container */
+      .featured-project-container {
+        margin-top: 50px;
         opacity: 0;
-        transition: all 0.4s var(--transition-bezier);
-        transition-delay: 0.2s;
+        transform: translateY(30px);
+        transition: all 0.6s var(--transition-bezier);
+        transition-delay: 0.9s;
       }
 
-      .project-item:hover .project-title,
-      .project-item:hover .project-description {
-        transform: translateY(0);
+      .content-card.active .featured-project-container {
         opacity: 1;
+        transform: translateY(0);
       }
 
-      /* Innovative experience layout */
+      .featured-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .featured-character {
+        font-family: "Ma Shan Zheng", cursive;
+        font-size: 3rem;
+        color: var(--gold);
+        margin-right: 15px;
+        transform: rotate(-10deg);
+      }
+
+      /* Dragon Scroll */
+      .dragon-scroll {
+        position: relative;
+        width: 100%;
+        height: 180px;
+        background-color: #f5e8d5;
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.5s var(--transition-bezier);
+        overflow: hidden;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      }
+
+      .dragon-scroll:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .scroll-handle {
+        position: relative;
+        width: 40px;
+        height: 180px;
+        background-color: #d0b48a;
+        z-index: 2;
+        flex-shrink: 0;
+        transition: transform 0.5s var(--transition-bezier);
+      }
+
+      .scroll-handle.left {
+        border-radius: 4px 0 0 4px;
+        box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .scroll-handle.right {
+        border-radius: 0 4px 4px 0;
+        box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .dragon-scroll:hover .scroll-handle.left {
+        transform: translateX(-10px);
+      }
+
+      .dragon-scroll:hover .scroll-handle.right {
+        transform: translateX(10px);
+      }
+
+      .scroll-content {
+        flex-grow: 1;
+        padding: 20px;
+        transform: translateY(100%);
+        transition: transform 0.5s var(--transition-bezier);
+      }
+
+      .dragon-scroll:hover .scroll-content {
+        transform: translateY(0);
+      }
+
+      /* Featured project styling */
+      .project-content.featured {
+        padding: 15px 20px;
+      }
+
+      .project-content.featured .project-title {
+        font-size: 1.4rem;
+      }
+
+      .project-content.featured .project-description {
+        font-size: 1rem;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .red-envelopes-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .red-envelope {
+          height: 300px;
+        }
+
+        .featured-title {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .featured-character {
+          margin-bottom: 10px;
+        }
+      }
+
+      /* Animations */
+      @keyframes envelopeWiggle {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(-3deg);
+        }
+        75% {
+          transform: rotate(3deg);
+        }
+      }
+
+      /* Add envelope wiggle animation when ready to open */
+      .red-envelope-wrapper:hover .red-envelope {
+        animation: envelopeWiggle 0.5s var(--transition-bezier);
+      }
+
+      /* Tea Garden Experience Section Styles */
+
+      /* Experience Container */
       .experience-container {
         position: relative;
         margin-top: 20px;
@@ -1003,126 +1256,483 @@
         transform: translateY(0);
       }
 
-      .experience-scroll {
+      /* Tea Garden Introduction */
+      .tea-garden-intro {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 40px;
         position: relative;
-        width: 100%;
-        height: 400px;
-        background-color: var(--rice-paper);
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       }
 
-      .experience-scroll::before {
+      .teapot {
+        position: relative;
+        width: 120px;
+        height: 80px;
+        margin-right: 30px;
+      }
+
+      .teapot-body {
+        position: absolute;
+        width: 80px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--jade), var(--tea));
+        border-radius: 50% 50% 10px 10px;
+        top: 20px;
+        left: 20px;
+        box-shadow: 0 5px 15px rgba(42, 129, 118, 0.2);
+        overflow: hidden;
+      }
+
+      .teapot-body::before {
         content: "";
         position: absolute;
-        top: 0;
+        width: 60%;
+        height: 20px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        top: 10px;
+        left: 20%;
+      }
+
+      .teapot-handle {
+        position: absolute;
+        width: 30px;
+        height: 40px;
+        border: 5px solid var(--jade);
+        border-left: none;
+        border-radius: 0 25px 25px 0;
+        top: 30px;
+        right: 0;
+      }
+
+      .teapot-spout {
+        position: absolute;
+        width: 30px;
+        height: 15px;
+        background-color: var(--jade);
+        border-radius: 10px;
+        transform: rotate(-30deg);
+        top: 40px;
         left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M0,0 L20,0 L20,20 L0,20 Z' fill='none' stroke='%23000814' stroke-width='0.2' opacity='0.1'/%3E%3C/svg%3E");
-        opacity: 0.05;
       }
 
-      .scroll-content {
-        position: relative;
-        height: 100%;
-        display: flex;
-        padding: 20px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
+      .steam-cloud {
+        position: absolute;
+        top: 0;
+        left: 40px;
+        width: 40px;
+        height: 20px;
+        opacity: 0;
+        animation: steamRise 3s infinite ease-out;
       }
 
-      .scroll-content::-webkit-scrollbar {
-        height: 5px;
+      .steam-cloud::before,
+      .steam-cloud::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
       }
 
-      .scroll-content::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.05);
-        border-radius: 10px;
+      .steam-cloud::before {
+        left: 0;
       }
 
-      .scroll-content::-webkit-scrollbar-thumb {
-        background: var(--jade);
-        border-radius: 10px;
+      .steam-cloud::after {
+        left: 15px;
+        top: -10px;
       }
 
-      .experience-item {
-        min-width: 300px;
-        height: 100%;
-        margin-right: 30px;
-        scroll-snap-align: start;
-        background: white;
-        border-radius: 8px;
-        padding: 30px;
+      @keyframes steamRise {
+        0% {
+          transform: translateY(0) scale(0.5);
+          opacity: 0;
+        }
+        20% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-30px) scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      .tea-quote {
         display: flex;
         flex-direction: column;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        transition: all 0.4s var(--transition-bezier);
+        align-items: center;
+      }
+
+      .tea-quote-chinese {
+        font-family: "Ma Shan Zheng", cursive;
+        font-size: 2.5rem;
+        color: var(--jade);
+        margin-bottom: 10px;
+      }
+
+      .tea-quote-english {
+        font-family: "Noto Serif SC", serif;
+        font-size: 1rem;
+        color: var(--ink-blue);
+        font-style: italic;
+        opacity: 0.8;
+      }
+
+      /* Tea Garden Layout */
+      .tea-garden {
         position: relative;
-        overflow: hidden;
-        transform: translateY(0);
+        width: 100%;
+        margin-bottom: 40px;
       }
 
-      .experience-item:hover {
-        transform: translateY(-10px);
+      .tea-pavilions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+        position: relative;
+      }
+
+      /* Tea Pavilion - Each Job Experience */
+      .tea-pavilion {
+        position: relative;
+        height: 340px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.5s var(--transition-bezier);
+        overflow: visible;
+        z-index: 2;
       }
 
-      .experience-item::before {
+      .tea-pavilion:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Pavilion Roof */
+      .pavilion-roof {
+        position: absolute;
+        width: 110%;
+        height: 60px;
+        background-color: var(--tea);
+        top: -30px;
+        left: -5%;
+        border-radius: 50% 50% 0 0 / 80% 80% 0 0;
+        box-shadow: 0 5px 15px rgba(175, 142, 106, 0.3);
+        z-index: 1;
+        transition: all 0.5s var(--transition-bezier);
+      }
+
+      .tea-pavilion:hover .pavilion-roof {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 8px 20px rgba(175, 142, 106, 0.4);
+      }
+
+      .pavilion-roof::before {
         content: "";
         position: absolute;
         top: 0;
         left: 0;
-        width: 5px;
+        width: 100%;
         height: 100%;
-        background: linear-gradient(to bottom, var(--jade), var(--tea));
-        transition: width 0.3s var(--transition-bezier);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M0,10 L20,10 M10,0 L10,20' stroke='rgba(0,0,0,0.1)' stroke-width='0.5' stroke-dasharray='2 2'/%3E%3C/svg%3E");
+        border-radius: 50% 50% 0 0 / 80% 80% 0 0;
+        opacity: 0.3;
       }
 
-      .experience-item:hover::before {
-        width: 10px;
+      /* Pavilion Body */
+      .pavilion-body {
+        position: relative;
+        height: 100%;
+        padding: 30px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(5px);
+        border-radius: 8px;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .pavilion-body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        opacity: 0.1;
+        z-index: -1;
+      }
+
+      /* Tea Trees */
+      .tea-tree {
+        position: absolute;
+        width: 30px;
+        height: 60px;
+        background-color: var(--jade);
+        opacity: 0.8;
+        border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+        box-shadow: 0 5px 15px rgba(42, 129, 118, 0.2);
+        z-index: -1;
+        transition: all 0.5s var(--transition-bezier);
+      }
+
+      .tea-tree.left {
+        bottom: -20px;
+        left: -15px;
+        transform: rotate(-10deg);
+      }
+
+      .tea-tree.right {
+        bottom: -20px;
+        right: -15px;
+        transform: rotate(10deg);
+      }
+
+      .tea-pavilion:hover .tea-tree.left {
+        transform: translateX(-5px) rotate(-15deg);
+      }
+
+      .tea-pavilion:hover .tea-tree.right {
+        transform: translateX(5px) rotate(15deg);
+      }
+
+      /* Experience Content */
+      .experience-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
       }
 
       .experience-year {
         font-family: "ZCOOL QingKe HuangYou", sans-serif;
-        font-size: 2.5rem;
+        font-size: 1.8rem;
         color: var(--jade);
-        opacity: 0.2;
+        opacity: 0.7;
         position: absolute;
-        top: 20px;
+        top: 30px;
         right: 20px;
         transition: all 0.4s var(--transition-bezier);
       }
 
-      .experience-item:hover .experience-year {
-        transform: translateY(-5px) rotate(-10deg);
-        opacity: 0.4;
+      .tea-pavilion:hover .experience-year {
+        transform: translateY(-5px) rotate(-5deg);
+        opacity: 0.9;
       }
 
       .experience-role {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         font-weight: 500;
-        margin-bottom: 10px;
-        margin-top: auto;
+        margin-bottom: 5px;
+        color: var(--ink-blue);
       }
 
       .experience-company {
         font-size: 1rem;
         color: var(--plum);
-        margin-bottom: 15px;
+        margin-bottom: 20px;
+      }
+
+      /* Scroll Container */
+      .scroll-container {
+        position: relative;
+        background-color: rgba(245, 242, 232, 0.7);
+        border-radius: 5px;
+        height: 160px;
+        margin-top: auto;
+        overflow: hidden;
+        transition: all 0.4s var(--transition-bezier);
+      }
+
+      .tea-pavilion:hover .scroll-container {
+        background-color: rgba(245, 242, 232, 0.9);
+      }
+
+      .scroll-handle {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 15px;
+        background-color: var(--tea);
+        z-index: 1;
+      }
+
+      .scroll-handle.top {
+        top: 0;
+        border-radius: 5px 5px 0 0;
+      }
+
+      .scroll-handle.bottom {
+        bottom: 0;
+        border-radius: 0 0 5px 5px;
+      }
+
+      .scroll-paper {
+        padding: 25px 15px 15px;
+        height: 100%;
+        overflow-y: auto;
+      }
+
+      .scroll-paper::-webkit-scrollbar {
+        width: 3px;
+      }
+
+      .scroll-paper::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .scroll-paper::-webkit-scrollbar-thumb {
+        background: var(--tea);
+        border-radius: 3px;
       }
 
       .experience-description {
         font-size: 0.9rem;
         line-height: 1.6;
         color: var(--ink-blue);
-        opacity: 0.8;
       }
 
-      /* Education lantern style */
+      /* Tea Garden Path */
+      .tea-garden-path {
+        position: relative;
+        width: 60%;
+        height: 20px;
+        margin: 10px auto 40px;
+        background-color: rgba(175, 142, 106, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .tea-garden-path::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10' viewBox='0 0 20 10'%3E%3Cpath d='M0,5 L20,5' stroke='rgba(175, 142, 106, 0.4)' stroke-width='1' stroke-dasharray='4 2'/%3E%3C/svg%3E");
+        animation: pathScroll 30s infinite linear;
+      }
+
+      @keyframes pathScroll {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 100px 0;
+        }
+      }
+
+      /* Skills as Tea Leaves */
+      .skills-container {
+        margin-top: 30px;
+        text-align: center;
+      }
+
+      .skills-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: var(--jade);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .skills-icon {
+        font-size: 1.8rem;
+        animation: leafSway 3s infinite alternate ease-in-out;
+      }
+
+      .tea-leaves-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .tea-leaf {
+        width: 110px;
+        height: 45px;
+        background-color: var(--jade);
+        border-radius: 50% 10% 50% 10%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(var(--rotation));
+        box-shadow: 0 5px 15px rgba(42, 129, 118, 0.2);
+        transition: all 0.4s var(--transition-bezier);
+        animation: leafFloat 5s infinite alternate ease-in-out;
+        animation-delay: calc(var(--rotation) * 0.3s);
+      }
+
+      .tea-leaf:hover {
+        transform: rotate(var(--rotation)) scale(1.1) translateY(-5px);
+        box-shadow: 0 8px 20px rgba(42, 129, 118, 0.3);
+      }
+
+      .leaf-text {
+        color: white;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transform: rotate(calc(var(--rotation) * -1));
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        letter-spacing: 0.5px;
+      }
+
+      @keyframes leafSway {
+        0%,
+        100% {
+          transform: rotate(-3deg);
+        }
+        50% {
+          transform: rotate(3deg);
+        }
+      }
+
+      @keyframes leafFloat {
+        0%,
+        100% {
+          transform: translateY(0) rotate(var(--rotation));
+        }
+        50% {
+          transform: translateY(-5px) rotate(var(--rotation));
+        }
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .tea-pavilions {
+          grid-template-columns: 1fr;
+        }
+
+        .tea-garden-intro {
+          flex-direction: column;
+        }
+
+        .teapot {
+          margin-right: 0;
+          margin-bottom: 20px;
+        }
+
+        .tea-leaf {
+          width: 100px;
+          height: 40px;
+        }
+      }
+
+      /* Mountain Academy Education Section Styles */
+
+      /* Education Container */
       .education-container {
+        position: relative;
         margin-top: 20px;
         opacity: 0;
         transform: translateY(30px);
@@ -1135,102 +1745,750 @@
         transform: translateY(0);
       }
 
-      .lanterns-container {
-        display: flex;
-        justify-content: space-around;
-        padding: 20px 0 50px;
+      /* Mountain Landscape */
+      .mountain-landscape {
         position: relative;
-      }
-
-      .education-lantern {
-        position: relative;
-        width: 200px;
-        transform-style: preserve-3d;
+        width: 100%;
+        height: 500px;
+        margin-bottom: 40px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         perspective: 1000px;
       }
 
-      .lantern-body {
-        width: 100%;
-        height: 250px;
-        background: linear-gradient(135deg, var(--gold), var(--light-gold));
-        border-radius: 15px;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 15px 35px rgba(233, 173, 58, 0.2);
-        transform-origin: top center;
-        animation: lanternSway 6s infinite alternate ease-in-out;
-        animation-delay: calc(var(--delay) * -2s);
-      }
-
-      @keyframes lanternSway {
-        0%,
-        100% {
-          transform: rotate(0deg);
-        }
-        50% {
-          transform: rotate(calc(var(--direction) * 5deg));
-        }
-      }
-
-      .lantern-top {
+      /* Sky Background with Day-Night Gradient */
+      .mountain-sky {
         position: absolute;
-        top: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60%;
-        height: 20px;
-        background-color: var(--tea);
-        border-radius: 10px 10px 0 0;
-      }
-
-      .lantern-string {
-        position: absolute;
-        top: -30px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 2px;
-        height: 30px;
-        background-color: var(--ink-blue);
-        opacity: 0.5;
-      }
-
-      .lantern-decoration {
-        position: absolute;
-        top: 15px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80%;
-        height: 50px;
-        border: 2px solid rgba(175, 142, 106, 0.3);
-        border-radius: 10px;
-      }
-
-      .lantern-content {
-        position: absolute;
-        top: 80px;
+        top: 0;
         left: 0;
         width: 100%;
-        padding: 20px;
-        text-align: center;
+        height: 70%;
+        background: linear-gradient(
+          180deg,
+          #1a2a4a 0%,
+          #2a3a6a 25%,
+          #6a7aaa 50%,
+          #9aaad0 75%,
+          #c0d0e8 100%
+        );
+        z-index: 1;
+        overflow: hidden;
       }
 
-      .lantern-year {
+      /* Clouds */
+      .cloud {
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.85);
+        border-radius: 50%;
+        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+        opacity: 0.8;
+        z-index: 2;
+      }
+
+      .cloud::before,
+      .cloud::after {
+        content: "";
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+      }
+
+      .cloud-1 {
+        width: 100px;
+        height: 50px;
+        top: 20%;
+        left: 10%;
+        animation: cloudDrift 80s infinite linear;
+      }
+
+      .cloud-1::before {
+        width: 60px;
+        height: 60px;
+        top: -30px;
+        left: 15px;
+      }
+
+      .cloud-1::after {
+        width: 50px;
+        height: 50px;
+        top: -20px;
+        left: 55px;
+      }
+
+      .cloud-2 {
+        width: 120px;
+        height: 60px;
+        top: 40%;
+        left: 70%;
+        animation: cloudDrift 100s infinite linear reverse;
+      }
+
+      .cloud-2::before {
+        width: 70px;
+        height: 70px;
+        top: -35px;
+        left: 20px;
+      }
+
+      .cloud-2::after {
+        width: 55px;
+        height: 55px;
+        top: -25px;
+        left: 65px;
+      }
+
+      .cloud-3 {
+        width: 80px;
+        height: 40px;
+        top: 15%;
+        left: 50%;
+        animation: cloudDrift 90s infinite linear;
+        animation-delay: -30s;
+      }
+
+      .cloud-3::before {
+        width: 50px;
+        height: 50px;
+        top: -25px;
+        left: 10px;
+      }
+
+      .cloud-3::after {
+        width: 40px;
+        height: 40px;
+        top: -20px;
+        left: 40px;
+      }
+
+      @keyframes cloudDrift {
+        0% {
+          transform: translateX(-150px);
+        }
+        100% {
+          transform: translateX(calc(100vw + 150px));
+        }
+      }
+
+      /* Moon */
+      .moon {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        top: 15%;
+        right: 15%;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+          0 0 40px rgba(255, 255, 255, 0.4);
+        z-index: 2;
+      }
+
+      .moon::before {
+        content: "";
+        position: absolute;
+        width: 54px;
+        height: 54px;
+        background-color: rgba(26, 42, 74, 0.1);
+        border-radius: 50%;
+        top: 3px;
+        left: 3px;
+      }
+
+      /* Stars */
+      .stars-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* Mountain Range */
+      .mountain-range {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70%;
+        z-index: 3;
+        perspective: 1000px;
+      }
+
+      /* Individual Mountains */
+      .mountain {
+        position: absolute;
+        bottom: 0;
+        width: 400px;
+        height: 350px;
+        transform-style: preserve-3d;
+        z-index: 3;
+        transition: all 0.5s var(--transition-bezier);
+      }
+
+      .mountain-1 {
+        left: 10%;
+        height: 320px;
+      }
+
+      .mountain-2 {
+        right: 10%;
+        height: 280px;
+      }
+
+      .mountain-peak {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--ink-blue), #2a3a5a);
+        clip-path: polygon(20% 100%, 50% 0%, 80% 100%);
+        z-index: 3;
+      }
+
+      .mountain-snow {
+        position: absolute;
+        bottom: 50%;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background-color: rgba(255, 255, 255, 0.8);
+        clip-path: polygon(
+          35% 100%,
+          50% 30%,
+          65% 100%,
+          60% 95%,
+          50% 60%,
+          40% 95%
+        );
+        z-index: 4;
+        opacity: 0.8;
+      }
+
+      /* Mountain Temple (Schools) */
+      .mountain-temple {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 100px;
+        z-index: 5;
+        transition: all 0.5s var(--transition-bezier);
+      }
+
+      .mountain-temple:hover {
+        transform: translateX(-50%) translateY(-10px);
+      }
+
+      .temple-roof {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background: linear-gradient(135deg, var(--gold), var(--light-gold));
+        clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+        box-shadow: 0 5px 15px rgba(233, 173, 58, 0.3);
+        z-index: 6;
+      }
+
+      .temple-body {
+        position: absolute;
+        top: 40px;
+        left: 10%;
+        width: 80%;
+        height: 50px;
+        background-color: #f5e8d5;
+        border-radius: 5px 5px 0 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        z-index: 5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .temple-column {
+        width: 10px;
+        height: 100%;
+        background-color: var(--tea);
+        border-radius: 5px;
+      }
+
+      .temple-column.left {
+        margin-left: 10px;
+      }
+
+      .temple-column.right {
+        margin-right: 10px;
+      }
+
+      .temple-gate {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 30px;
+        background-color: rgba(
+          175,
+          142,
+          106,
+          0.5
+        ); /* Increased opacity from 0.3 to 0.5 */
+        border-radius: 15px 15px 0 0;
+      }
+      .temple-stairs {
+        position: absolute;
+        bottom: -10px;
+        left: 20%;
+        width: 60%;
+        height: 10px;
+        background-color: var(--tea);
+        border-radius: 5px;
+        z-index: 4;
+      }
+
+      /* Education Info */
+      .education-info {
+        position: absolute;
+        bottom: 100%; /* Changed from top: 100% to bottom: 100% */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 300px;
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(5px);
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        opacity: 0;
+        transition: all 0.4s var(--transition-bezier);
+        pointer-events: none;
+        margin-bottom: 15px; /* Added margin to position it higher */
+      }
+
+      .mountain-temple:hover .education-info {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-10px); /* Changed to move upward (-10px) instead of downward */
+      }
+
+      .education-year {
         font-family: "ZCOOL QingKe HuangYou", sans-serif;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+        color: var(--gold);
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .education-degree {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--ink-blue);
+        text-align: center;
+        margin-bottom: 5px;
+      }
+
+      .education-school {
+        font-size: 1rem;
+        color: var(--ink-red);
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      .education-scroll {
+        background-color: rgba(245, 242, 232, 0.7);
+        border-radius: 5px;
+        padding: 12px;
+        max-height: 120px;
+        overflow-y: auto;
+        border: 1px solid rgba(175, 142, 106, 0.2);
+      }
+
+      .education-scroll::-webkit-scrollbar {
+        width: 3px;
+      }
+
+      .education-scroll::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.03);
+      }
+
+      .education-scroll::-webkit-scrollbar-thumb {
+        background: var(--jade);
+        border-radius: 3px;
+      }
+
+      .degree-focus {
+        font-weight: 500;
+        color: var(--jade);
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+      }
+
+      .education-details {
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: var(--ink-blue);
+      }
+
+      /* Mountain Paths */
+      .mountain-path {
+        position: absolute;
+        width: 150px;
+        height: 2px;
+        background-color: rgba(175, 142, 106, 0.6);
+        z-index: 4;
+        transform-origin: left center;
+      }
+
+      .path-1 {
+        bottom: 30%;
+        left: 50%;
+        transform: rotate(-25deg);
+        width: 100px;
+      }
+
+      .path-2 {
+        bottom: 25%;
+        right: 50%;
+        transform: rotate(25deg) scaleX(-1);
+        width: 120px;
+      }
+
+      .mountain-path::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        width: 100%;
+        height: 6px;
+        background-color: transparent;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Ccircle cx='3' cy='3' r='2' fill='rgba(175, 142, 106, 0.4)'/%3E%3C/svg%3E");
+        background-repeat: repeat-x;
+        animation: pathDots 10s infinite linear;
+      }
+
+      @keyframes pathDots {
+        0% {
+          background-position: 0px 0px;
+        }
+        100% {
+          background-position: 100px 0px;
+        }
+      }
+
+      /* Foreground Elements */
+      .mountain-foreground {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 20%;
+        background-color: var(--jade);
+        opacity: 0.8;
+        z-index: 7;
+        display: flex;
+        align-items: flex-end;
+      }
+
+      /* Scholar Figure */
+      .scholar-figure {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        width: 20px;
+        height: 40px;
+        z-index: 8;
+        transform: translateX(-50%);
+        animation: scholarWalk 60s infinite alternate linear;
+        transition: transform 0.3s var(--transition-bezier);
+      }
+
+      .scholar-figure:hover {
+        transform: translateX(-50%) scale(1.5);
+      }
+
+      .scholar-head {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 12px;
+        height: 12px;
+        background-color: #f5e8d5;
+        border-radius: 50%;
+        z-index: 9;
+      }
+
+      .scholar-body {
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 8px;
+        height: 20px;
+        background-color: var(--ink-red);
+        border-radius: 4px;
+        z-index: 8;
+      }
+
+      .scholar-scroll {
+        position: absolute;
+        top: 15px;
+        right: -5px;
+        width: 6px;
+        height: 10px;
+        background-color: #f5e8d5;
+        border-radius: 2px;
+        transform: rotate(45deg);
+        z-index: 9;
+      }
+
+      @keyframes scholarWalk {
+        0% {
+          left: 10%;
+        }
+        20% {
+          left: 30%;
+        }
+        40% {
+          left: 50%;
+        }
+        60% {
+          left: 70%;
+        }
+        80% {
+          left: 90%;
+        }
+        100% {
+          left: 10%;
+        }
+      }
+
+      /* Pine Trees */
+      .pine-tree {
+        position: absolute;
+        bottom: 10px;
+        width: 50px;
+        height: 80px;
+        z-index: 8;
+      }
+
+      .pine-tree::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 8px;
+        height: 15px;
+        background-color: var(--tea);
+        border-radius: 2px;
+      }
+
+      .pine-tree::after {
+        content: "";
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 65px;
+        background-color: var(--ink-blue);
+        clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+        opacity: 0.8;
+      }
+
+      .tree-1 {
+        left: 15%;
+        height: 70px;
+      }
+
+      .tree-2 {
+        left: 25%;
+        height: 60px;
+      }
+
+      .tree-3 {
+        right: 20%;
+        height: 75px;
+      }
+
+      /* Wisdom Stone */
+      .wisdom-stone {
+        position: absolute;
+        bottom: 15px;
+        right: 50px;
+        width: 80px;
+        height: 60px;
+        background-color: rgba(175, 142, 106, 0.8);
+        border-radius: 10px;
+        z-index: 8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: all 0.4s var(--transition-bezier);
+      }
+
+      .wisdom-stone:hover {
+        width: 320px; /* Increased from 300px */
+        height: 150px; /* Increased from 120px */
+        bottom: 30px;
+        right: 80px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .wisdom-text {
+        text-align: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.4s var(--transition-bezier);
+        width: 300px; /* Increased from 280px */
+        padding: 15px; /* Increased from 10px */
+      }
+
+      .wisdom-stone:hover .wisdom-text {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .wisdom-chinese {
+        font-family: "Ma Shan Zheng", cursive;
+        font-size: 1.3rem;
         color: var(--ink-blue);
         margin-bottom: 10px;
       }
 
-      .lantern-degree {
-        font-size: 1.1rem;
-        font-weight: 500;
-        margin-bottom: 5px;
-        color: var(--ink-blue);
+      .wisdom-english {
+        font-size: 0.85rem;
+        color: var(--rice-paper);
+        margin-bottom: 8px;
+        font-style: italic;
+        line-height: 1.4;
       }
 
-      .lantern-school {
+      .wisdom-source {
+        font-size: 0.8rem;
+        color: var(--rice-paper);
+        text-align: right;
+        opacity: 0.8;
+      }
+
+      /* Academic Achievements Section */
+      .education-highlights {
+        margin-top: 50px;
+      }
+
+      .highlights-title {
+        font-size: 1.7rem;
+        text-align: center;
+        color: var(--gold);
+        margin-bottom: 30px;
+        font-family: "Noto Serif SC", serif;
+        font-weight: 500;
+        position: relative;
+      }
+
+      .highlights-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+      }
+
+      .achievement-items {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .achievement-item {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s var(--transition-bezier);
+        border-left: 4px solid var(--gold);
+      }
+
+      .achievement-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+
+      .achievement-icon {
+        font-size: 1.8rem;
+        margin-right: 20px;
+        opacity: 0.8;
+      }
+
+      .achievement-title {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--ink-blue);
+        margin-bottom: 5px;
+      }
+
+      .achievement-desc {
         font-size: 0.9rem;
-        color: var(--ink-red);
+        color: var(--plum);
+      }
+
+      /* Stars Animation */
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.1;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .mountain-landscape {
+          height: 400px;
+        }
+
+        .achievement-items {
+          grid-template-columns: 1fr;
+        }
+
+        .mountain-1,
+        .mountain-2 {
+          width: 300px;
+        }
+
+        .education-info {
+          width: 250px;
+        }
+
+        .wisdom-stone:hover {
+          width: 280px;
+          height: 180px; /* Increased height for mobile */
+          right: 30px;
+        }
+
+        .wisdom-text {
+          width: 260px;
+          padding: 15px;
+        }
       }
 
       /* About section with artistic style */
@@ -1523,6 +2781,9 @@
         position: relative;
         transform-origin: center;
         z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .lotus-petal {
@@ -1537,14 +2798,14 @@
 
       .lotus-center {
         position: absolute;
-        width: 25px;
-        height: 25px;
+        width: 40px;
+        height: 40px;
         background-color: var(--gold);
         border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
+        /* Instead of percentage positioning which may be affected by the petals */
+        left: 20px; /* (80px - 25px) / 2 = 27.5px */
+        top: 39px;
+        z-index: 10; /* Increase z-index to ensure it's on top */
       }
 
       .lotus-petal:nth-child(1) {
@@ -1570,17 +2831,6 @@
       }
       .lotus-petal:nth-child(8) {
         transform: rotate(315deg) translateY(-15px);
-      }
-
-      .lotus-center {
-        position: absolute;
-        width: 25px;
-        height: 25px;
-        background-color: var(--gold);
-        border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
       }
 
       /* Chinese Characters */
@@ -2516,12 +3766,6 @@
             <div class="aura-ring"></div>
           </div>
         </div>
-        <div
-          class="droplet-label"
-          style="top: calc(25% + 70px); left: 25%; transform: translateX(-50%)"
-        >
-          Projects
-        </div>
 
         <div
           class="ink-droplet ink-droplet-experience interactive"
@@ -2534,12 +3778,6 @@
             <div class="aura-ring"></div>
             <div class="aura-ring"></div>
           </div>
-        </div>
-        <div
-          class="droplet-label"
-          style="top: calc(25% + 70px); left: 75%; transform: translateX(-50%)"
-        >
-          Experience
         </div>
 
         <div
@@ -2554,12 +3792,6 @@
             <div class="aura-ring"></div>
           </div>
         </div>
-        <div
-          class="droplet-label"
-          style="top: calc(75% - 50px); left: 25%; transform: translateX(-50%)"
-        >
-          Education
-        </div>
 
         <div
           class="ink-droplet ink-droplet-about interactive"
@@ -2573,18 +3805,12 @@
             <div class="aura-ring"></div>
           </div>
         </div>
-        <div
-          class="droplet-label"
-          style="top: calc(75% - 50px); left: 75%; transform: translateX(-50%)"
-        >
-          About
-        </div>
       </div>
     </div>
 
     <!-- Content cards area -->
     <div class="content-area">
-      <!-- Projects card -->
+      <!-- Projects card with Red Envelope redesign -->
       <div class="content-card" id="projects-card">
         <div class="card-header">
           <div class="card-close interactive" data-cursor-text="Close"></div>
@@ -2593,8 +3819,7 @@
             <div>
               <h2 class="card-title">Projects</h2>
               <p class="card-subtitle">
-                A collection of digital experiences inspired by the artistry and
-                precision of dim sum.
+                Digital experiences wrapped in the fortune of red envelopes.
               </p>
             </div>
           </div>
@@ -2602,77 +3827,157 @@
 
         <div class="card-content">
           <div class="projects-container">
-            <div class="projects-grid">
+            <div class="red-envelopes-grid">
+              <!-- Project 1 - Red Envelope -->
               <div
-                class="project-item interactive"
+                class="red-envelope-wrapper interactive"
                 style="--delay: 1"
-                data-cursor-text="View Project"
+                data-cursor-text="Open Envelope"
               >
-                <img
-                  src="https://picsum.photos/600/400"
-                  alt="Soul Guide RAG Pipeline"
-                  class="project-image"
-                />
-                <div class="project-content">
-                  <h3 class="project-title">Soul Guide RAG Pipeline</h3>
-                  <p class="project-description">
-                    Built with Pinecone, OpenAI GPT-4-turbo, and LangChain,
-                    achieving a 30% reduction in query latency and 25% boost in
-                    retrieval accuracy. Deployed via AWS with a modern
-                    full-stack architecture.
-                  </p>
+                <div class="red-envelope">
+                  <div class="envelope-front">
+                    <div class="envelope-seal">
+                      <span class="seal-character">祿</span>
+                    </div>
+                    <div class="envelope-pattern left"></div>
+                    <div class="envelope-pattern right"></div>
+                  </div>
+                  <div class="envelope-flap"></div>
+                  <div class="envelope-card">
+                    <div class="project-content">
+                      <h3 class="project-title">Soul Guide RAG Pipeline</h3>
+                      <div class="project-image-container"></div>
+                      <p class="project-description">
+                        Built with Pinecone, OpenAI GPT-4-turbo, and LangChain,
+                        achieving a 30% reduction in query latency and 25% boost
+                        in retrieval accuracy. Deployed via AWS with a modern
+                        full-stack architecture.
+                      </p>
+                      <div class="project-tags">
+                        <span class="project-tag">AI</span>
+                        <span class="project-tag">AWS</span>
+                        <span class="project-tag">Next.js</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
+              <!-- Project 2 - Red Envelope -->
               <div
-                class="project-item interactive"
+                class="red-envelope-wrapper interactive"
                 style="--delay: 2"
-                data-cursor-text="View Project"
+                data-cursor-text="Open Envelope"
               >
-                <img
-                  src="https://picsum.photos/600/400"
-                  alt="Climate Corporation AI Chatbot"
-                  class="project-image"
-                />
-                <div class="project-content">
-                  <h3 class="project-title">Climate Corporation AI Chatbot</h3>
-                  <p class="project-description">
-                    Developed an AI chatbot for farmers using TypeScript,
-                    GraphQL, OpenAI/Llama3, and LaunchDarkly, enhancing customer
-                    support with dynamic, context-aware interactions.
-                  </p>
+                <div class="red-envelope">
+                  <div class="envelope-front">
+                    <div class="envelope-seal">
+                      <span class="seal-character">福</span>
+                    </div>
+                    <div class="envelope-pattern left"></div>
+                    <div class="envelope-pattern right"></div>
+                  </div>
+                  <div class="envelope-flap"></div>
+                  <div class="envelope-card">
+                    <div class="project-content">
+                      <h3 class="project-title">
+                        Climate Corporation AI Chatbot
+                      </h3>
+                      <div class="project-image-container"></div>
+                      <p class="project-description">
+                        Developed an AI chatbot for farmers using TypeScript,
+                        GraphQL, OpenAI/Llama3, and LaunchDarkly, enhancing
+                        customer support with dynamic, context-aware
+                        interactions.
+                      </p>
+                      <div class="project-tags">
+                        <span class="project-tag">TypeScript</span>
+                        <span class="project-tag">GraphQL</span>
+                        <span class="project-tag">LLM</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
+              <!-- Project 3 - Red Envelope -->
               <div
-                class="project-item interactive"
+                class="red-envelope-wrapper interactive"
                 style="--delay: 3"
-                data-cursor-text="View Project"
+                data-cursor-text="Open Envelope"
               >
-                <img
-                  src="https://picsum.photos/600/400"
-                  alt="Edurain Payment System"
-                  class="project-image"
-                />
-                <div class="project-content">
-                  <h3 class="project-title">Edurain Payment System</h3>
-                  <p class="project-description">
-                    Integrated Stripe, React, Node.js, and Firebase for secure,
-                    automated subscription-based transactions, leading to 300%
-                    revenue growth and improved user retention.
-                  </p>
+                <div class="red-envelope">
+                  <div class="envelope-front">
+                    <div class="envelope-seal">
+                      <span class="seal-character">財</span>
+                    </div>
+                    <div class="envelope-pattern left"></div>
+                    <div class="envelope-pattern right"></div>
+                  </div>
+                  <div class="envelope-flap"></div>
+                  <div class="envelope-card">
+                    <div class="project-content">
+                      <h3 class="project-title">Edurain Payment System</h3>
+                      <div class="project-image-container">
+                        <!-- <img src="https://picsum.photos/600/400" alt="Edurain Payment System" class="project-image" /> -->
+                      </div>
+                      <p class="project-description">
+                        Integrated Stripe, React, Node.js, and Firebase for
+                        secure, automated subscription-based transactions,
+                        leading to 300% revenue growth and improved user
+                        retention.
+                      </p>
+                      <div class="project-tags">
+                        <span class="project-tag">React</span>
+                        <span class="project-tag">Node.js</span>
+                        <span class="project-tag">Firebase</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="bamboo-divider"></div>
+
+          <!-- Add an optional fourth project that's special or featured -->
+          <div class="featured-project-container">
+            <h3 class="featured-title">
+              <span class="featured-character">寶</span>
+              <span>Featured Project</span>
+            </h3>
+            <div
+              class="dragon-scroll interactive"
+              data-cursor-text="Unroll Scroll"
+            >
+              <div class="scroll-handle left"></div>
+              <div class="scroll-content">
+                <div class="project-content featured">
+                  <h3 class="project-title">Celestial Ink Portfolio</h3>
+                  <p class="project-description">
+                    An interactive portfolio website inspired by traditional
+                    Chinese art and calligraphy, featuring custom animations,
+                    parallax effects, and creative UI components built with
+                    HTML, CSS, and JavaScript.
+                  </p>
+                  <div class="project-tags">
+                    <span class="project-tag">HTML5</span>
+                    <span class="project-tag">CSS3</span>
+                    <span class="project-tag">JavaScript</span>
+                    <span class="project-tag">Animation</span>
+                  </div>
+                </div>
+              </div>
+              <div class="scroll-handle right"></div>
+            </div>
+          </div>
         </div>
 
         <div class="seal-stamp"></div>
       </div>
 
-      <!-- Experience card -->
+      <!-- Experience card with Tea Garden theme -->
       <div class="content-card" id="experience-card">
         <div class="card-header">
           <div class="card-close interactive" data-cursor-text="Close"></div>
@@ -2681,8 +3986,8 @@
             <div>
               <h2 class="card-title">Experience</h2>
               <p class="card-subtitle">
-                A professional journey steeped in creativity and expertise, like
-                the finest tea.
+                A professional journey steeped in wisdom, like the finest tea
+                leaves.
               </p>
             </div>
           </div>
@@ -2690,79 +3995,184 @@
 
         <div class="card-content">
           <div class="experience-container">
-            <div class="experience-scroll">
-              <div class="scroll-content">
+            <!-- Tea Garden Introduction -->
+            <div class="tea-garden-intro">
+              <div class="teapot">
+                <div class="teapot-body"></div>
+                <div class="teapot-handle"></div>
+                <div class="teapot-spout"></div>
+                <div class="steam-cloud"></div>
+              </div>
+              <div class="tea-quote">
+                <span class="tea-quote-chinese">以茶修身</span>
+                <span class="tea-quote-english"
+                  >Cultivate oneself through tea</span
+                >
+              </div>
+            </div>
+
+            <div class="tea-garden">
+              <!-- Tea Pavilions - Each represents a job experience -->
+              <div class="tea-pavilions">
                 <!-- Soul Guide Internship -->
                 <div
-                  class="experience-item interactive"
-                  data-cursor-text="Explore Role"
+                  class="tea-pavilion interactive"
+                  data-cursor-text="Soul Guide"
                 >
-                  <div class="experience-year">2024</div>
-                  <h3 class="experience-role">Software Engineer Intern</h3>
-                  <p class="experience-company">Soul Guide</p>
-                  <p class="experience-description">
-                    Built a RAG pipeline with Pinecone, OpenAI GPT-4-turbo, and
-                    LangChain—reducing query latency by 30% and boosting
-                    retrieval accuracy by 25%. Migrated Webflow CMS to a
-                    full-stack Next.js + AWS architecture (React Server
-                    Components, API Gateway, DynamoDB, and Redis caching) to cut
-                    load times by 45%, optimized AWS Lambda/Step Functions with
-                    SQS/SNS to lower compute costs by 40%, and developed an AI
-                    recommendation engine using BERT embeddings, FastAPI, and
-                    TF-IDF deployed on EKS.
-                  </p>
+                  <div class="pavilion-roof"></div>
+                  <div class="pavilion-body">
+                    <div class="experience-content">
+                      <div class="experience-year">2024</div>
+                      <h3 class="experience-role">Software Engineer Intern</h3>
+                      <div class="experience-company">Soul Guide</div>
+                      <div class="scroll-container">
+                        <div class="scroll-handle top"></div>
+                        <div class="scroll-paper">
+                          <p class="experience-description">
+                            Built a RAG pipeline with Pinecone, OpenAI
+                            GPT-4-turbo, and LangChain—reducing query latency by
+                            30% and boosting retrieval accuracy by 25%. Migrated
+                            Webflow CMS to a full-stack Next.js + AWS
+                            architecture (React Server Components, API Gateway,
+                            DynamoDB, and Redis caching) to cut load times by
+                            45%.
+                          </p>
+                        </div>
+                        <div class="scroll-handle bottom"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tea-tree left"></div>
+                  <div class="tea-tree right"></div>
                 </div>
 
-                <!-- Bayer - The Climate Corporation Internship -->
+                <!-- Climate Corporation Internship -->
                 <div
-                  class="experience-item interactive"
-                  data-cursor-text="Explore Role"
+                  class="tea-pavilion interactive"
+                  data-cursor-text="Climate Corporation"
                 >
-                  <div class="experience-year">2024</div>
-                  <h3 class="experience-role">Software Engineer Intern</h3>
-                  <p class="experience-company">
-                    Bayer - The Climate Corporation
-                  </p>
-                  <p class="experience-description">
-                    Built an AI chatbot for farmers and customer support by
-                    integrating TypeScript, GraphQL, OpenAI/Llama3, and
-                    LaunchDarkly. Optimized build processes with Webpack/Babel
-                    to achieve 75% faster build times and improved reliability
-                    with Cypress/Jest.
-                  </p>
+                  <div class="pavilion-roof"></div>
+                  <div class="pavilion-body">
+                    <div class="experience-content">
+                      <div class="experience-year">2024</div>
+                      <h3 class="experience-role">Software Engineer Intern</h3>
+                      <div class="experience-company">
+                        The Climate Corporation
+                      </div>
+                      <div class="scroll-container">
+                        <div class="scroll-handle top"></div>
+                        <div class="scroll-paper">
+                          <p class="experience-description">
+                            Built an AI chatbot for farmers and customer support
+                            by integrating TypeScript, GraphQL, OpenAI/Llama3,
+                            and LaunchDarkly. Optimized build processes with
+                            Webpack/Babel to achieve 75% faster build times and
+                            improved reliability with Cypress/Jest.
+                          </p>
+                        </div>
+                        <div class="scroll-handle bottom"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tea-tree left"></div>
+                  <div class="tea-tree right"></div>
                 </div>
 
                 <!-- Edurain Internship -->
                 <div
-                  class="experience-item interactive"
-                  data-cursor-text="Explore Role"
+                  class="tea-pavilion interactive"
+                  data-cursor-text="Edurain"
                 >
-                  <div class="experience-year">2023-2024</div>
-                  <h3 class="experience-role">Software Engineer Intern</h3>
-                  <p class="experience-company">Edurain</p>
-                  <p class="experience-description">
-                    Developed a payment system for a house-matching app by
-                    integrating Stripe, React, Node.js, and Firebase—driving
-                    300% revenue growth. Implemented real-time payment tracking
-                    and error monitoring with Firebase Analytics to reduce
-                    failed payments by 20%.
-                  </p>
+                  <div class="pavilion-roof"></div>
+                  <div class="pavilion-body">
+                    <div class="experience-content">
+                      <div class="experience-year">2023-2024</div>
+                      <h3 class="experience-role">Software Engineer Intern</h3>
+                      <div class="experience-company">Edurain</div>
+                      <div class="scroll-container">
+                        <div class="scroll-handle top"></div>
+                        <div class="scroll-paper">
+                          <p class="experience-description">
+                            Developed a payment system for a house-matching app
+                            by integrating Stripe, React, Node.js, and
+                            Firebase—driving 300% revenue growth. Implemented
+                            real-time payment tracking and error monitoring with
+                            Firebase Analytics to reduce failed payments by 20%.
+                          </p>
+                        </div>
+                        <div class="scroll-handle bottom"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tea-tree left"></div>
+                  <div class="tea-tree right"></div>
                 </div>
 
                 <!-- Mindbody Internship -->
                 <div
-                  class="experience-item interactive"
-                  data-cursor-text="Explore Role"
+                  class="tea-pavilion interactive"
+                  data-cursor-text="Mindbody"
                 >
-                  <div class="experience-year">2023</div>
-                  <h3 class="experience-role">Software Engineer Intern</h3>
-                  <p class="experience-company">Mindbody</p>
-                  <p class="experience-description">
-                    Created an AI-powered booking assistant using React,
-                    Node.js, and LangChain, automating class scheduling and
-                    resolving conflicts. Developed a recommendation engine with
-                    LLMs that increased class bookings by 20%.
-                  </p>
+                  <div class="pavilion-roof"></div>
+                  <div class="pavilion-body">
+                    <div class="experience-content">
+                      <div class="experience-year">2023</div>
+                      <h3 class="experience-role">Software Engineer Intern</h3>
+                      <div class="experience-company">Mindbody</div>
+                      <div class="scroll-container">
+                        <div class="scroll-handle top"></div>
+                        <div class="scroll-paper">
+                          <p class="experience-description">
+                            Created an AI-powered booking assistant using React,
+                            Node.js, and LangChain, automating class scheduling
+                            and resolving conflicts. Developed a recommendation
+                            engine with LLMs that increased class bookings by
+                            20%.
+                          </p>
+                        </div>
+                        <div class="scroll-handle bottom"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tea-tree left"></div>
+                  <div class="tea-tree right"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tea Garden Path -->
+            <div class="tea-garden-path"></div>
+
+            <!-- Skills Represented as Tea Leaves -->
+            <div class="skills-container">
+              <h3 class="skills-title">
+                <span class="skills-icon">🍃</span>
+                Technical Cultivations
+              </h3>
+              <div class="tea-leaves-container">
+                <div class="tea-leaf" style="--rotation: 15deg">
+                  <span class="leaf-text">React</span>
+                </div>
+                <div class="tea-leaf" style="--rotation: -10deg">
+                  <span class="leaf-text">AWS</span>
+                </div>
+                <div class="tea-leaf" style="--rotation: 5deg">
+                  <span class="leaf-text">TypeScript</span>
+                </div>
+                <div class="tea-leaf" style="--rotation: -5deg">
+                  <span class="leaf-text">Node.js</span>
+                </div>
+                <div class="tea-leaf" style="--rotation: 12deg">
+                  <span class="leaf-text">GraphQL</span>
+                </div>
+                <div class="tea-leaf" style="--rotation: -8deg">
+                  <span class="leaf-text">Firebase</span>
+                </div>
+                <div class="tea-leaf" style="--rotation: 3deg">
+                  <span class="leaf-text">LangChain</span>
+                </div>
+                <div class="tea-leaf" style="--rotation: -7deg">
+                  <span class="leaf-text">Next.js</span>
                 </div>
               </div>
             </div>
@@ -2773,8 +4183,7 @@
 
         <div class="seal-stamp"></div>
       </div>
-
-      <!-- Education card -->
+      <!-- Education card with Mountain Academy theme -->
       <div class="content-card" id="education-card">
         <div class="card-header">
           <div class="card-close interactive" data-cursor-text="Close"></div>
@@ -2783,8 +4192,8 @@
             <div>
               <h2 class="card-title">Education</h2>
               <p class="card-subtitle">
-                Knowledge cultivated through years of dedicated study and
-                practice.
+                Knowledge cultivated through years of dedicated study, like
+                climbing the sacred mountains.
               </p>
             </div>
           </div>
@@ -2792,45 +4201,184 @@
 
         <div class="card-content">
           <div class="education-container">
-            <div class="lanterns-container">
-              <div class="education-lantern" style="--delay: 1; --direction: 1">
-                <div class="lantern-string"></div>
-                <div class="lantern-body">
-                  <div class="lantern-top"></div>
-                  <div class="lantern-decoration"></div>
-                  <div class="lantern-content">
-                    <div class="lantern-year">2018</div>
-                    <h3 class="lantern-degree">Master in Interactive Media</h3>
-                    <p class="lantern-school">Hong Kong University of Design</p>
+            <!-- Mountain landscape container -->
+            <div class="mountain-landscape">
+              <!-- Sky elements -->
+              <div class="mountain-sky">
+                <div class="cloud cloud-1"></div>
+                <div class="cloud cloud-2"></div>
+                <div class="cloud cloud-3"></div>
+                <div class="moon"></div>
+                <div class="stars-container"></div>
+              </div>
+
+              <!-- Mountain range -->
+              <div class="mountain-range">
+                <!-- Mountain peaks with schools on top -->
+                <div class="mountain mountain-1">
+                  <div class="mountain-peak"></div>
+                  <div class="mountain-snow"></div>
+
+                  <!-- Georgia Tech Temple -->
+                  <div
+                    class="mountain-temple interactive"
+                    data-cursor-text="Georgia Tech"
+                  >
+                    <div class="temple-roof"></div>
+                    <div class="temple-body">
+                      <div class="temple-column left"></div>
+                      <div class="temple-column right"></div>
+                      <div class="temple-gate"></div>
+                    </div>
+                    <div class="temple-stairs"></div>
+
+                    <!-- Education Info -->
+                    <div class="education-info">
+                      <div class="education-year">2025–2027</div>
+                      <div class="education-degree">
+                        M.S. in Computer Science
+                      </div>
+                      <div class="education-school">
+                        Georgia Institute of Technology
+                      </div>
+                      <div class="education-scroll">
+                        <div class="degree-focus">
+                          Specialization: Machine Learning & AI
+                        </div>
+                        <div class="education-details">
+                          Looking forward to advanced coursework in distributed
+                          systems, deep learning, and NLP.
+                        </div>
+                      </div>
+                    </div>
                   </div>
+
+                  <!-- Mountain path -->
+                  <div class="mountain-path path-1"></div>
+                </div>
+
+                <div class="mountain mountain-2">
+                  <div class="mountain-peak"></div>
+                  <div class="mountain-snow"></div>
+
+                  <!-- Cal Poly Temple -->
+                  <div
+                    class="mountain-temple interactive"
+                    data-cursor-text="Cal Poly"
+                  >
+                    <div class="temple-roof"></div>
+                    <div class="temple-body">
+                      <div class="temple-column left"></div>
+                      <div class="temple-column right"></div>
+                      <div class="temple-gate"></div>
+                    </div>
+                    <div class="temple-stairs"></div>
+
+                    <!-- Education Info -->
+                    <div class="education-info">
+                      <div class="education-year">2021–2024</div>
+                      <div class="education-degree">
+                        B.S. in Computer Science
+                      </div>
+                      <div class="education-school">
+                        California Polytechnic State University
+                      </div>
+                      <div class="education-scroll">
+                        <div class="degree-focus">Minor: Data Science</div>
+                        <div class="education-details">
+                          Graduated with honors. Key coursework in systems
+                          programming, algorithms, databases, and full-stack
+                          development.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Mountain path -->
+                  <div class="mountain-path path-2"></div>
                 </div>
               </div>
 
-              <div
-                class="education-lantern"
-                style="--delay: 2; --direction: -1"
-              >
-                <div class="lantern-string"></div>
-                <div class="lantern-body">
-                  <div class="lantern-top"></div>
-                  <div class="lantern-decoration"></div>
-                  <div class="lantern-content">
-                    <div class="lantern-year">2016</div>
-                    <h3 class="lantern-degree">Bachelor in Computer Science</h3>
-                    <p class="lantern-school">University of Technology</p>
+              <!-- Foreground elements -->
+              <div class="mountain-foreground">
+                <!-- Scholar figure - You on a journey -->
+                <div
+                  class="scholar-figure interactive"
+                  data-cursor-text="The Journey"
+                >
+                  <div class="scholar-head"></div>
+                  <div class="scholar-body"></div>
+                  <div class="scholar-scroll"></div>
+                </div>
+
+                <!-- Pine trees -->
+                <div class="pine-tree tree-1"></div>
+                <div class="pine-tree tree-2"></div>
+                <div class="pine-tree tree-3"></div>
+
+                <!-- Wisdom quotes and poems -->
+                <div
+                  class="wisdom-stone interactive"
+                  data-cursor-text="Ancient Wisdom"
+                >
+                  <div class="wisdom-text">
+                    <div class="wisdom-chinese">學而不思則罔，思而不學則殆</div>
+                    <div class="wisdom-english">
+                      Learning without thought is labor lost; thought without
+                      learning is perilous
+                    </div>
+                    <div class="wisdom-source">- Confucius</div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="education-lantern" style="--delay: 3; --direction: 1">
-                <div class="lantern-string"></div>
-                <div class="lantern-body">
-                  <div class="lantern-top"></div>
-                  <div class="lantern-decoration"></div>
-                  <div class="lantern-content">
-                    <div class="lantern-year">2014</div>
-                    <h3 class="lantern-degree">Associate in Digital Design</h3>
-                    <p class="lantern-school">Creative Arts College</p>
+            <!-- Additional education highlights -->
+            <div class="education-highlights">
+              <h3 class="highlights-title">Academic Achievements</h3>
+              <div class="achievement-items">
+                <div
+                  class="achievement-item interactive"
+                  data-cursor-text="Highlight"
+                >
+                  <div class="achievement-icon">🏆</div>
+                  <div class="achievement-text">
+                    <div class="achievement-title">Dean's List</div>
+                    <div class="achievement-desc">
+                      All semesters at Cal Poly
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="achievement-item interactive"
+                  data-cursor-text="Highlight"
+                >
+                  <div class="achievement-icon">🔍</div>
+                  <div class="achievement-text">
+                    <div class="achievement-title">Research Assistant</div>
+                    <div class="achievement-desc">NLP Lab, 2022-2023</div>
+                  </div>
+                </div>
+                <div
+                  class="achievement-item interactive"
+                  data-cursor-text="Highlight"
+                >
+                  <div class="achievement-icon">💻</div>
+                  <div class="achievement-text">
+                    <div class="achievement-title">Hackathon Winner</div>
+                    <div class="achievement-desc">CalHacks 2023</div>
+                  </div>
+                </div>
+                <div
+                  class="achievement-item interactive"
+                  data-cursor-text="Highlight"
+                >
+                  <div class="achievement-icon">📚</div>
+                  <div class="achievement-text">
+                    <div class="achievement-title">Teaching Assistant</div>
+                    <div class="achievement-desc">
+                      Data Structures & Algorithms
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2844,69 +4392,67 @@
       </div>
 
       <!-- About Card -->
-      <div class="content-card" id="about-card">
-        <div class="card-header">
-          <div class="card-close interactive" data-cursor-text="Close"></div>
-          <div class="card-title-container">
-            <div class="card-title-chinese">我</div>
-            <div>
-              <h2 class="card-title">About Justin Lau</h2>
-              <p class="card-subtitle">
-                Software Engineer | Creative Innovator | Seattle, WA
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-content">
-          <div class="about-container">
-            <div class="about-text">
-              <p class="about-paragraph" style="--delay: 1">
-                Hello, I'm Justin Lau—a dedicated software engineer at Bayer
-                (The Climate Corporation) based in Seattle. I combine a strong
-                technical foundation with a flair for creative problem-solving
-                to build robust digital solutions.
-              </p>
-              <p class="about-paragraph" style="--delay: 2">
-                My expertise spans modern frameworks and technologies, including
-                React (v17+), Angular (v12+), and Node.js (v14+), enabling me to
-                craft scalable applications with engaging user experiences.
-              </p>
-              <p class="about-paragraph" style="--delay: 3">
-                I am passionate about staying at the forefront of technology
-                trends—contributing to open-source projects and continuously
-                refining my skills to push the boundaries of what's possible.
-              </p>
-              <p class="about-paragraph" style="--delay: 4">
-                Whether architecting complex systems or perfecting intuitive
-                interfaces, I approach every project with a playful spirit and
-                an unwavering commitment to excellence.
-              </p>
-            </div>
-
-            <div
-              class="about-image-container interactive"
-              data-cursor-text="Seattle"
-            >
-              <img
-                src="https://picsum.photos/400/600"
-                alt="Seattle cityscape at dusk"
-                class="about-image"
-              />
-              <div class="about-image-overlay">
-                <div class="about-caption">
-                  Seattle at dusk – where innovation meets inspiration.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="bamboo-divider"></div>
-        </div>
-
-        <div class="seal-stamp"></div>
+<div class="content-card" id="about-card">
+  <div class="card-header">
+    <div class="card-close interactive" data-cursor-text="Close"></div>
+    <div class="card-title-container">
+      <div class="card-title-chinese">我</div>
+      <div>
+        <h2 class="card-title">About Justin Lau</h2>
+        <p class="card-subtitle">
+          Software Engineer | Designer | Volleyball Fanatic
+        </p>
       </div>
     </div>
+  </div>
+
+  <div class="card-content">
+    <div class="about-container">
+      <div class="about-text">
+        <p class="about-paragraph" style="--delay: 1">
+          I'm Justin—an engineer who builds, a designer who refines, and a 
+          volleyball fanatic who never turns down a good rally. I thrive on 
+          crafting intuitive digital experiences with clean, efficient design.
+        </p>
+        <p class="about-paragraph" style="--delay: 2">
+          My work blends technical depth with creative precision. Whether 
+          it's developing seamless applications, refining modern UI/UX, 
+          or optimizing workflows, I focus on solutions that are both 
+          functional and aesthetic.
+        </p>
+        <p class="about-paragraph" style="--delay: 3">
+          Outside of tech, you'll find me setting and spiking on the volleyball 
+          court, competing in pickleball matches, or experimenting with the 
+          perfect ratio of matcha to milk. I take my coffee, milk tea, and 
+          design choices seriously.
+        </p>
+        <p class="about-paragraph" style="--delay: 4">
+          Originally from <b>LA County (626)</b>, I have a deep appreciation for 
+          good food, well-crafted drinks, and timeless design. Seattle may be 
+          where I work, but my roots will always be in Southern California.
+        </p>
+      </div>
+
+      <div class="about-image-container interactive" data-cursor-text="LA & Seattle">
+        <img
+          src="https://picsum.photos/400/600"
+          alt="Cityscape at dusk"
+          class="about-image"
+        />
+        <div class="about-image-overlay">
+          <div class="about-caption">
+            Where design, code, and great tea meet.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bamboo-divider"></div>
+  </div>
+
+  <div class="seal-stamp"></div>
+</div>
+
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
@@ -2957,11 +4503,15 @@
 
             // Inactivity detection
             this.setupInactivityDetection();
+
+            this.setupClickRipple();
           },
 
           // Setup cursor
           setupCursor() {
-            // Update cursor position on mouse move
+            // Update cursor position on mouse move with requestAnimationFrame for smoother movement
+            let rafId = null;
+
             document.addEventListener("mousemove", (e) => {
               this.cursorPos.x = e.clientX;
               this.cursorPos.y = e.clientY;
@@ -2969,57 +4519,38 @@
               // Reset inactivity timer
               this.resetInactivityTimer();
 
-              // Move cursor dot instantly
-              this.cursorDot.style.left = `${this.cursorPos.x}px`;
-              this.cursorDot.style.top = `${this.cursorPos.y}px`;
+              // Use requestAnimationFrame for smoother updates
+              if (!rafId) {
+                rafId = requestAnimationFrame(() => {
+                  // Update all cursor elements simultaneously
+                  this.cursorDot.style.transform = `translate(${this.cursorPos.x}px, ${this.cursorPos.y}px) translate(-50%, -50%)`;
+                  this.cursorRing.style.transform = `translate(${this.cursorPos.x}px, ${this.cursorPos.y}px) translate(-50%, -50%)`;
+                  this.cursorHalo.style.transform = `translate(${this.cursorPos.x}px, ${this.cursorPos.y}px) translate(-50%, -50%) scale(0.8)`;
+                  this.cursorText.style.transform = `translate(${this.cursorPos.x}px, ${this.cursorPos.y}px) translateY(-50%)`;
 
-              // Move cursor text with dot
-              this.cursorText.style.left = `${this.cursorPos.x}px`;
-              this.cursorText.style.top = `${this.cursorPos.y}px`;
+                  // Calculate velocity for dynamic cursor
+                  const dx = this.cursorPos.x - this.lastCursorPos.x;
+                  const dy = this.cursorPos.y - this.lastCursorPos.y;
+                  const velocity = Math.sqrt(dx * dx + dy * dy);
 
-              // Add slight delay to ring and halo for smooth effect
-              setTimeout(() => {
-                this.cursorRing.style.left = `${this.cursorPos.x}px`;
-                this.cursorRing.style.top = `${this.cursorPos.y}px`;
+                  // Create cursor trails based on velocity (but less frequently)
+                  if (velocity > 8 && Math.random() > 0.7) {
+                    this.createCursorTrail();
+                  }
 
-                this.cursorHalo.style.left = `${this.cursorPos.x}px`;
-                this.cursorHalo.style.top = `${this.cursorPos.y}px`;
-              }, 40); // Reduced delay for smoother following
+                  // Store last position
+                  this.lastCursorPos.x = this.cursorPos.x;
+                  this.lastCursorPos.y = this.cursorPos.y;
 
-              // Calculate velocity for dynamic cursor
-              const dx = this.cursorPos.x - this.lastCursorPos.x;
-              const dy = this.cursorPos.y - this.lastCursorPos.y;
-              const velocity = Math.sqrt(dx * dx + dy * dy);
-
-              // Create cursor trails based on velocity
-              if (velocity > 5) {
-                this.createCursorTrail();
+                  rafId = null;
+                });
               }
-
-              // Dynamic cursor size based on velocity
-              if (velocity > 8) {
-                this.cursorDot.style.width = "6px";
-                this.cursorDot.style.height = "6px";
-                this.cursorRing.style.width = "45px";
-                this.cursorRing.style.height = "45px";
-              } else {
-                this.cursorDot.style.width = "8px";
-                this.cursorDot.style.height = "8px";
-                this.cursorRing.style.width = "36px";
-                this.cursorRing.style.height = "36px";
-              }
-
-              // Store last position
-              this.lastCursorPos.x = this.cursorPos.x;
-              this.lastCursorPos.y = this.cursorPos.y;
             });
 
             // Handle mouse down
             document.addEventListener("mousedown", () => {
-              this.cursorDot.style.transform =
-                "translate(-50%, -50%) scale(0.5)";
-              this.cursorRing.style.transform =
-                "translate(-50%, -50%) scale(0.8)";
+              this.cursorDot.style.transform = `translate(${this.cursorPos.x}px, ${this.cursorPos.y}px) translate(-50%, -50%) scale(0.5)`;
+              this.cursorRing.style.transform = `translate(${this.cursorPos.x}px, ${this.cursorPos.y}px) translate(-50%, -50%) scale(0.8)`;
 
               // Create ripple effect
               this.createRippleEffect(
@@ -3027,16 +4558,12 @@
                 this.cursorPos.y,
                 "rgba(255, 255, 255, 0.3)"
               );
-
-              // Create ink splatter
-              this.createInkSplatter(this.cursorPos.x, this.cursorPos.y);
             });
 
             // Handle mouse up
             document.addEventListener("mouseup", () => {
-              this.cursorDot.style.transform = "translate(-50%, -50%) scale(1)";
-              this.cursorRing.style.transform =
-                "translate(-50%, -50%) scale(1)";
+              this.cursorDot.style.transform = `translate(${this.cursorPos.x}px, ${this.cursorPos.y}px) translate(-50%, -50%) scale(1)`;
+              this.cursorRing.style.transform = `translate(${this.cursorPos.x}px, ${this.cursorPos.y}px) translate(-50%, -50%) scale(1)`;
             });
 
             // Hide cursor when leaving window
@@ -3048,9 +4575,23 @@
             document.addEventListener("mouseenter", () => {
               this.cursorSystem.style.opacity = "1";
             });
-
             // Start trail animation at init
             this.setupTrailAnimation();
+          },
+
+          setupClickRipple() {
+            // Create ripple on any click within the document
+            document.addEventListener("click", (e) => {
+              // Create ripple at the click position
+              this.createRippleEffect(
+                e.clientX,
+                e.clientY,
+                "rgba(255, 255, 255, 0.3)"
+              );
+
+              // Create ink splatter for additional effect
+              this.createInkSplatter(e.clientX, e.clientY);
+            });
           },
 
           // Setup continuous trail animation for a smoother effect
@@ -3542,6 +5083,280 @@
             }
           },
         };
+
+        const redEnvelopes = document.querySelectorAll(".red-envelope-wrapper");
+
+        redEnvelopes.forEach((envelope) => {
+          envelope.addEventListener("mouseenter", () => {
+            // Set a timeout to match the animation of the envelope opening
+            setTimeout(() => {
+              const card = envelope.querySelector(".envelope-card");
+              if (card) {
+                // Force the card to be visible
+                card.style.opacity = "1";
+                card.style.transform = "translateY(0)";
+                card.style.zIndex = "3"; // Temporarily boost z-index to ensure visibility
+              }
+            }, 400); // Delay to match the envelope opening animation
+          });
+
+          envelope.addEventListener("mouseleave", () => {
+            // Reset when mouse leaves
+            const card = envelope.querySelector(".envelope-card");
+            if (card) {
+              // Give time for the envelope to close
+              setTimeout(() => {
+                card.style.opacity = "0";
+                card.style.transform = "translateY(20px)";
+                card.style.zIndex = "0"; // Reset z-index
+              }, 100);
+            }
+          });
+        });
+
+        // Add this to your existing JavaScript inside the DOMContentLoaded event handler
+
+        // Tea Garden Experience Section Animations
+        function initTeaGardenAnimations() {
+          // Teapot Steam Animation
+          const teapot = document.querySelector(".teapot");
+          if (teapot) {
+            setInterval(() => {
+              const steamCloud = document.createElement("div");
+              steamCloud.classList.add("steam-cloud");
+              teapot.appendChild(steamCloud);
+
+              // Remove the steam cloud after animation completes
+              setTimeout(() => {
+                steamCloud.remove();
+              }, 3000);
+            }, 3000);
+          }
+
+          // Tea Leaves hover effects
+          const teaLeaves = document.querySelectorAll(".tea-leaf");
+          teaLeaves.forEach((leaf) => {
+            // Random animation duration and delay for natural movement
+            const duration = 5 + Math.random() * 3;
+            const delay = Math.random() * 2;
+            leaf.style.animationDuration = `${duration}s`;
+            leaf.style.animationDelay = `${delay}s`;
+          });
+
+          // Animate pavilions on scroll into view
+          const pavilions = document.querySelectorAll(".tea-pavilion");
+          const observerOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.1,
+          };
+
+          const pavilionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+                pavilionObserver.unobserve(entry.target);
+              }
+            });
+          }, observerOptions);
+
+          pavilions.forEach((pavilion, index) => {
+            // Set initial state
+            pavilion.style.opacity = "0";
+            pavilion.style.transform = "translateY(30px)";
+            pavilion.style.transition = `all 0.6s var(--transition-bezier) ${
+              0.2 + index * 0.1
+            }s`;
+
+            // Observe for animation
+            pavilionObserver.observe(pavilion);
+          });
+        }
+
+        // Call the function after the experience card is activated
+        document.querySelectorAll(".ink-droplet").forEach((droplet) => {
+          droplet.addEventListener("click", () => {
+            if (droplet.getAttribute("data-section") === "experience") {
+              // Initialize tea garden animations after a slight delay
+              setTimeout(initTeaGardenAnimations, 600);
+            }
+          });
+        });
+
+        // Add this to your existing JavaScript inside the DOMContentLoaded event handler
+
+        // Mountain Academy Education Section Animations
+        function initMountainAnimations() {
+          // Create stars
+          const starsContainer = document.querySelector(".stars-container");
+          if (starsContainer) {
+            for (let i = 0; i < 100; i++) {
+              const star = document.createElement("div");
+              star.style.position = "absolute";
+              star.style.width = `${Math.random() * 2 + 1}px`;
+              star.style.height = star.style.width;
+              star.style.backgroundColor = "white";
+              star.style.borderRadius = "50%";
+              star.style.left = `${Math.random() * 100}%`;
+              star.style.top = `${Math.random() * 100}%`;
+              star.style.opacity = Math.random() * 0.5 + 0.3;
+
+              // Add twinkling animation
+              star.style.animation = `twinkle ${
+                Math.random() * 3 + 2
+              }s infinite ${Math.random() * 5}s ease-in-out`;
+
+              starsContainer.appendChild(star);
+            }
+          }
+
+          // Animate mountains on scroll into view
+          const mountains = document.querySelectorAll(".mountain");
+          const observerOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.1,
+          };
+
+          const mountainObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.style.transform = "translateY(0) scale(1)";
+                entry.target.style.opacity = "1";
+                mountainObserver.unobserve(entry.target);
+              }
+            });
+          }, observerOptions);
+
+          mountains.forEach((mountain, index) => {
+            // Set initial state
+            mountain.style.transform = "translateY(50px) scale(0.9)";
+            mountain.style.opacity = "0";
+            mountain.style.transition = `all 0.8s var(--transition-bezier) ${
+              0.2 + index * 0.2
+            }s`;
+
+            // Observe for animation
+            mountainObserver.observe(mountain);
+          });
+
+          // Achievement items animation
+          const achievements = document.querySelectorAll(".achievement-item");
+          const achievementObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.style.transform = "translateX(0)";
+                entry.target.style.opacity = "1";
+                achievementObserver.unobserve(entry.target);
+              }
+            });
+          }, observerOptions);
+
+          achievements.forEach((achievement, index) => {
+            // Alternate from left and right
+            const direction = index % 2 === 0 ? -1 : 1;
+            achievement.style.transform = `translateX(${direction * 50}px)`;
+            achievement.style.opacity = "0";
+            achievement.style.transition = `all 0.6s var(--transition-bezier) ${
+              0.3 + index * 0.1
+            }s`;
+
+            // Observe for animation
+            achievementObserver.observe(achievement);
+          });
+
+          // Parallax effect for mountain landscape elements
+          const mountainLandscape = document.querySelector(
+            ".mountain-landscape"
+          );
+          if (mountainLandscape) {
+            mountainLandscape.addEventListener("mousemove", (e) => {
+              const { left, top, width, height } =
+                mountainLandscape.getBoundingClientRect();
+              const x = (e.clientX - left) / width - 0.5;
+              const y = (e.clientY - top) / height - 0.5;
+
+              // Apply parallax to different elements with different intensity
+              const mountains = mountainLandscape.querySelectorAll(".mountain");
+              mountains.forEach((mountain, index) => {
+                const factor = index % 2 === 0 ? 15 : 10;
+                mountain.style.transform = `translateX(${
+                  x * factor
+                }px) translateY(${y * factor}px)`;
+              });
+
+              // Move clouds with parallax
+              const clouds = mountainLandscape.querySelectorAll(".cloud");
+              clouds.forEach((cloud, index) => {
+                const factor = (index + 1) * 20;
+                cloud.style.transform = `translateX(${
+                  x * factor
+                }px) translateY(${y * factor}px)`;
+              });
+
+              // Move moon with slight parallax
+              const moon = mountainLandscape.querySelector(".moon");
+              if (moon) {
+                moon.style.transform = `translateX(${x * 10}px) translateY(${
+                  y * 10
+                }px)`;
+              }
+
+              // Move foreground elements with stronger parallax
+              const trees = mountainLandscape.querySelectorAll(".pine-tree");
+              trees.forEach((tree, index) => {
+                const factor = 30 - index * 5;
+                tree.style.transform = `translateX(${x * factor}px)`;
+              });
+
+              // Move wisdom stone with parallax
+              const stone = mountainLandscape.querySelector(".wisdom-stone");
+              if (stone) {
+                stone.style.transform = `translateX(${x * 20}px)`;
+              }
+            });
+
+            // Reset transforms when mouse leaves
+            mountainLandscape.addEventListener("mouseleave", () => {
+              const elements = mountainLandscape.querySelectorAll(
+                ".mountain, .cloud, .moon, .pine-tree, .wisdom-stone"
+              );
+              elements.forEach((element) => {
+                element.style.transform = "";
+              });
+            });
+          }
+
+          // Animated path for scholar figure
+          const scholar = document.querySelector(".scholar-figure");
+          if (scholar) {
+            // Add bobbing animation
+            setInterval(() => {
+              scholar.animate(
+                [
+                  { transform: "translateY(0)" },
+                  { transform: "translateY(-3px)" },
+                  { transform: "translateY(0)" },
+                ],
+                {
+                  duration: 1000,
+                  easing: "ease-in-out",
+                }
+              );
+            }, 3000);
+          }
+        }
+
+        // Call the function after the education card is activated
+        document.querySelectorAll(".ink-droplet").forEach((droplet) => {
+          droplet.addEventListener("click", () => {
+            if (droplet.getAttribute("data-section") === "education") {
+              // Initialize mountain animations after a slight delay
+              setTimeout(initMountainAnimations, 600);
+            }
+          });
+        });
 
         // Initialize the experience
         inkGarden.init();
