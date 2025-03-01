@@ -122,7 +122,8 @@
         transform-origin: center;
         will-change: transform;
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: 100% auto;
+        background-position: center;
       }
 
       .ink-stroke-1 {
@@ -130,7 +131,7 @@
         height: 40%;
         top: -10%;
         left: -10%;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'%3E%3Cpath d='M10,50 Q50,10 100,50 T200,50' stroke='%23000814' stroke-width='8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-10 0 220 100'%3E%3Cpath d='M10,50 Q50,10 100,50 T200,50' stroke='%23000814' stroke-width='8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
         animation: strokeFloat 45s infinite alternate ease-in-out;
       }
 
@@ -155,10 +156,10 @@
       /* Flowing ink river */
       .ink-river {
         position: absolute;
-        bottom: 0;
+        top: 0;
         left: 0;
         width: 100%;
-        height: 10%;
+        height: 100%; /* Expanded from 10% */
         background: linear-gradient(to bottom, transparent, var(--ink-wash));
         opacity: 0.3;
         transform-origin: bottom;
@@ -176,24 +177,44 @@
         animation: inkRipple 10s infinite;
       }
 
+      /* Adjust positions and delays */
       .ink-ripple:nth-child(1) {
-        bottom: 10%;
+        top: 10%;
         left: 20%;
         animation-delay: 0s;
       }
 
       .ink-ripple:nth-child(2) {
-        bottom: 30%;
+        top: 30%;
         left: 50%;
         animation-delay: 3s;
       }
 
       .ink-ripple:nth-child(3) {
-        bottom: 20%;
+        top: 20%;
         left: 70%;
         animation-delay: 6s;
       }
 
+      .ink-ripple:nth-child(4) {
+        top: 50%;
+        left: 40%;
+        animation-delay: 9s;
+      }
+
+      .ink-ripple:nth-child(5) {
+        top: 70%;
+        left: 60%;
+        animation-delay: 12s;
+      }
+
+      .ink-ripple:nth-child(6) {
+        top: 30%;
+        left: 80%;
+        animation-delay: 15s;
+      }
+
+      /* The keyframes remain the same */
       @keyframes inkRipple {
         0% {
           transform: scale(0);
@@ -266,11 +287,13 @@
       }
 
       .proverb-details {
-        max-width: 0;
-        overflow: hidden;
-        transition: max-width 0.5s var(--transition-bezier);
-        white-space: nowrap;
-      }
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  transition: max-width 0.5s var(--transition-bezier);
+  white-space: nowrap;
+}
+
 
       .proverb-container:hover .proverb-details {
         max-width: 300px;
@@ -288,21 +311,23 @@
       }
 
       .proverb-meaning {
-        font-family: "Noto Sans HK", sans-serif;
-        font-size: 0.8rem;
-        color: var(--ink-blue);
-        opacity: 0.8;
-        transform: translateX(-20px);
-        opacity: 0;
-        transition: all 0.5s var(--transition-bezier);
-        transition-delay: 0.2s;
-      }
+  font-family: "Noto Sans HK", sans-serif;
+  font-size: 0.8rem;
+  color: var(--ink-blue);
+  transform: translateX(-20px);
+  opacity: 0;
+  transition: all 0.5s var(--transition-bezier);
+  transition-delay: 0.2s;
+}
 
-      .proverb-container:hover .proverb-pinyin,
-      .proverb-container:hover .proverb-meaning {
-        transform: translateX(0);
-        opacity: 1;
-      }
+
+
+.proverb-container:hover .proverb-pinyin,
+.proverb-container:hover .proverb-meaning {
+  transform: translateX(0);
+  opacity: 1;
+}
+
 
       /* Character with translation tooltip */
       .character-tooltip-container {
@@ -430,54 +455,55 @@
       }
 
       .cursor-text {
-  position: absolute;
-  top: 50%;
-  left: 100%;          
-  margin-left: 40px;   /* Substantial margin */
-  
-  background: transparent;
-  color: var(--ink-blue);
-  
-  padding: 8px 16px;
-  border-radius: 6px;
-  
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1.8px;
-  
-  opacity: 0;
-  transform: translateY(-50%) translateX(-20px);
-  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-  
-  white-space: nowrap;
-  pointer-events: none;
-  
-  border: 1px solid rgba(10, 26, 56, 0.1);
-  background-color: rgba(245, 242, 232, 0.8);
-  backdrop-filter: blur(10px);
-  
-  box-shadow: 
-    0 4px 15px rgba(10, 26, 56, 0.05);
-  
-  z-index: 10001;
-}
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        margin-left: 40px; /* Substantial margin */
 
-/* When cursor text appears */
-.interactive:hover ~ .cursor-system .cursor-text {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-}
+        background: transparent;
+        color: var(--ink-blue);
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .cursor-text {
-    font-size: 11px;
-    padding: 6px 12px;
-    margin-left: 25px;
-  }
-}
+        padding: 8px 16px;
+        border-radius: 6px;
+
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1.8px;
+
+        opacity: 0;
+        transform: translateY(-50%) translateX(-20px);
+        transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+        white-space: nowrap;
+        pointer-events: none;
+
+        border: 1px solid rgba(10, 26, 56, 0.1);
+        background-color: rgba(245, 242, 232, 0.8);
+        backdrop-filter: blur(10px);
+
+        box-shadow: 0 4px 15px rgba(10, 26, 56, 0.05);
+
+        z-index: 10001;
+      }
+
+      /* When cursor text appears */
+      .interactive:hover ~ .cursor-system .cursor-text {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .cursor-text {
+          font-size: 11px;
+          padding: 6px 12px;
+          margin-left: 25px;
+        }
+      }
 
       .cursor-trail {
         position: absolute;
@@ -1693,82 +1719,86 @@
         transform: rotate(10deg);
       }
 
-      /* Replace the existing welcome-btn styling with this more artistic version */
+      /* New Explore Button Styles */
       .welcome-btn {
         position: relative;
         display: inline-block;
-        padding: 12px 40px;
-        background: transparent;
-        color: var(--ink-blue);
-        font-size: 1.1rem;
-        letter-spacing: 3px;
-        font-weight: 400;
-        border: 2px solid var(--ink-red);
-        border-radius: 0;
+        padding: 15px 45px;
+        font-size: 1.2rem;
+        font-family: "Noto Serif SC", serif;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: white;
+        border: none;
+        background: linear-gradient(
+          45deg,
+          var(--ink-red),
+          var(--gold),
+          var(--jade)
+        );
+        background-size: 300% 300%;
+        border-radius: 8px;
         cursor: pointer;
         overflow: hidden;
-        transition: all 0.4s var(--transition-bezier);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         z-index: 1;
-        box-shadow: 5px 5px 0 rgba(156, 44, 65, 0.2);
+        animation: gradientAnimation 5s ease infinite;
       }
 
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .welcome-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Sliding shine effect */
       .welcome-btn::before {
         content: "";
         position: absolute;
         top: 0;
-        left: 0;
-        width: 0;
+        left: -100%;
+        width: 200%;
         height: 100%;
-        background-color: var(--ink-red);
-        transition: width 0.4s var(--transition-bezier);
-        z-index: -1;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transform: skewX(-25deg);
+        transition: left 0.5s ease;
       }
-
-      .welcome-btn:hover {
-        color: white;
-        transform: translate(3px, 3px);
-        box-shadow: 2px 2px 0 rgba(156, 44, 65, 0.2);
-      }
-
       .welcome-btn:hover::before {
-        width: 100%;
+        left: 100%;
       }
 
+      /* Glowing border on hover */
       .welcome-btn::after {
         content: "";
         position: absolute;
-        width: 15px;
-        height: 15px;
-        background-color: var(--ink-red);
-        top: -7px;
-        right: -7px;
-        transform: rotate(45deg);
-        transition: all 0.4s var(--transition-bezier);
-      }
-
-      /* Red seal stamp effect on hover */
-      .welcome-btn:hover::after {
-        transform: rotate(225deg);
-      }
-
-      /* Add brush strokes to the button */
-      .welcome-btn-strokes {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        opacity: 0.15;
-        mix-blend-mode: multiply;
-        z-index: -1;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 30'%3E%3Cpath d='M10,15 Q30,5 50,15 T90,15' stroke='%239c2c41' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-        background-size: 100% 100%;
-        transition: opacity 0.4s var(--transition-bezier);
-      }
-
-      .welcome-btn:hover .welcome-btn-strokes {
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
         opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .welcome-btn:hover::after {
+        opacity: 1;
       }
 
       /* Animation keyframes */
@@ -2245,14 +2275,14 @@
             left: 70%;
             --float-duration: 45s;
             --float-delay: -5s;
-            animation-delay: 0.2s;
+            animation-delay: 0.5s;
             opacity: 1;
           "
         >
           <path
             d="M100,20 C130,20 150,50 150,80 C150,110 130,140 100,140 C70,140 50,110 50,80 C50,50 70,20 100,20 Z"
             fill="var(--ink-blue)"
-            transform="rotate(30)"
+            transform="rotate(30, 100, 80)"
           />
         </svg>
         <svg
@@ -2292,7 +2322,7 @@
           <path
             d="M90,15 C120,15 140,35 140,65 C140,95 120,115 90,115 C60,115 40,95 40,65 C40,35 60,15 90,15 Z"
             fill="var(--jade)"
-            transform="rotate(45)"
+            transform="rotate(45, 90, 65)"
           />
         </svg>
       </div>
@@ -2311,22 +2341,28 @@
         <h1 class="welcome-title">Justin Lau</h1>
         <p class="welcome-subtitle">Software Engineer & Designer</p>
 
-        <!-- Signature seal -->
-        <!-- <div class="welcome-seal">
-          <div class="seal-circle">
-            <div class="seal-character">光</div>
-          </div>
-        </div> -->
-
-        <!-- Enter button - Using the same ID as in original code -->
-        <button
-          class="welcome-btn interactive"
-          id="enter-button"
-          data-cursor-text="Enter"
+        <!-- Signature seal becomes the portfolio button -->
+        <div
+          class="welcome-seal interactive"
+          id="portfolio-button"
+          data-cursor-text="Go To Portfolio"
         >
-          <div class="welcome-btn-strokes"></div>
-          EXPLORE
-        </button>
+          <div class="seal-circle">
+            <div class="seal-character">印</div>
+          </div>
+        </div>
+
+        <!-- Commented out the original Explore button -->
+        <!--
+<button
+  class="welcome-btn interactive"
+  id="enter-button"
+  data-cursor-text="Enter"
+>
+  <div class="welcome-btn-strokes"></div>
+  EXPLORE
+</button>
+-->
       </div>
     </div>
 
@@ -2348,6 +2384,9 @@
       <div class="ink-stroke ink-stroke-3"></div>
       <div class="ink-mountains"></div>
       <div class="ink-river">
+        <div class="ink-ripple"></div>
+        <div class="ink-ripple"></div>
+        <div class="ink-ripple"></div>
         <div class="ink-ripple"></div>
         <div class="ink-ripple"></div>
         <div class="ink-ripple"></div>
@@ -2570,15 +2609,17 @@
                 data-cursor-text="View Project"
               >
                 <img
-                  src="/api/placeholder/600/400"
-                  alt="Tea House App"
+                  src="https://picsum.photos/600/400"
+                  alt="Soul Guide RAG Pipeline"
                   class="project-image"
                 />
                 <div class="project-content">
-                  <h3 class="project-title">Tea House Finder</h3>
+                  <h3 class="project-title">Soul Guide RAG Pipeline</h3>
                   <p class="project-description">
-                    A mobile application for discovering traditional Hong Kong
-                    tea houses and dim sum restaurants.
+                    Built with Pinecone, OpenAI GPT-4-turbo, and LangChain,
+                    achieving a 30% reduction in query latency and 25% boost in
+                    retrieval accuracy. Deployed via AWS with a modern
+                    full-stack architecture.
                   </p>
                 </div>
               </div>
@@ -2589,15 +2630,16 @@
                 data-cursor-text="View Project"
               >
                 <img
-                  src="/api/placeholder/600/400"
-                  alt="Market Explorer"
+                  src="https://picsum.photos/600/400"
+                  alt="Climate Corporation AI Chatbot"
                   class="project-image"
                 />
                 <div class="project-content">
-                  <h3 class="project-title">Market Explorer</h3>
+                  <h3 class="project-title">Climate Corporation AI Chatbot</h3>
                   <p class="project-description">
-                    Interactive mapping system for navigating Hong Kong's
-                    vibrant wet markets.
+                    Developed an AI chatbot for farmers using TypeScript,
+                    GraphQL, OpenAI/Llama3, and LaunchDarkly, enhancing customer
+                    support with dynamic, context-aware interactions.
                   </p>
                 </div>
               </div>
@@ -2608,15 +2650,16 @@
                 data-cursor-text="View Project"
               >
                 <img
-                  src="/api/placeholder/600/400"
-                  alt="Cantonese Learning"
+                  src="https://picsum.photos/600/400"
+                  alt="Edurain Payment System"
                   class="project-image"
                 />
                 <div class="project-content">
-                  <h3 class="project-title">Cantonese Learning</h3>
+                  <h3 class="project-title">Edurain Payment System</h3>
                   <p class="project-description">
-                    Immersive platform for learning Cantonese through
-                    context-based scenarios.
+                    Integrated Stripe, React, Node.js, and Firebase for secure,
+                    automated subscription-based transactions, leading to 300%
+                    revenue growth and improved user retention.
                   </p>
                 </div>
               </div>
@@ -2649,63 +2692,76 @@
           <div class="experience-container">
             <div class="experience-scroll">
               <div class="scroll-content">
+                <!-- Soul Guide Internship -->
+                <div
+                  class="experience-item interactive"
+                  data-cursor-text="Explore Role"
+                >
+                  <div class="experience-year">2024</div>
+                  <h3 class="experience-role">Software Engineer Intern</h3>
+                  <p class="experience-company">Soul Guide</p>
+                  <p class="experience-description">
+                    Built a RAG pipeline with Pinecone, OpenAI GPT-4-turbo, and
+                    LangChain—reducing query latency by 30% and boosting
+                    retrieval accuracy by 25%. Migrated Webflow CMS to a
+                    full-stack Next.js + AWS architecture (React Server
+                    Components, API Gateway, DynamoDB, and Redis caching) to cut
+                    load times by 45%, optimized AWS Lambda/Step Functions with
+                    SQS/SNS to lower compute costs by 40%, and developed an AI
+                    recommendation engine using BERT embeddings, FastAPI, and
+                    TF-IDF deployed on EKS.
+                  </p>
+                </div>
+
+                <!-- Bayer - The Climate Corporation Internship -->
+                <div
+                  class="experience-item interactive"
+                  data-cursor-text="Explore Role"
+                >
+                  <div class="experience-year">2024</div>
+                  <h3 class="experience-role">Software Engineer Intern</h3>
+                  <p class="experience-company">
+                    Bayer - The Climate Corporation
+                  </p>
+                  <p class="experience-description">
+                    Built an AI chatbot for farmers and customer support by
+                    integrating TypeScript, GraphQL, OpenAI/Llama3, and
+                    LaunchDarkly. Optimized build processes with Webpack/Babel
+                    to achieve 75% faster build times and improved reliability
+                    with Cypress/Jest.
+                  </p>
+                </div>
+
+                <!-- Edurain Internship -->
+                <div
+                  class="experience-item interactive"
+                  data-cursor-text="Explore Role"
+                >
+                  <div class="experience-year">2023-2024</div>
+                  <h3 class="experience-role">Software Engineer Intern</h3>
+                  <p class="experience-company">Edurain</p>
+                  <p class="experience-description">
+                    Developed a payment system for a house-matching app by
+                    integrating Stripe, React, Node.js, and Firebase—driving
+                    300% revenue growth. Implemented real-time payment tracking
+                    and error monitoring with Firebase Analytics to reduce
+                    failed payments by 20%.
+                  </p>
+                </div>
+
+                <!-- Mindbody Internship -->
                 <div
                   class="experience-item interactive"
                   data-cursor-text="Explore Role"
                 >
                   <div class="experience-year">2023</div>
-                  <h3 class="experience-role">Senior Creative Developer</h3>
-                  <p class="experience-company">Innovative Studio</p>
+                  <h3 class="experience-role">Software Engineer Intern</h3>
+                  <p class="experience-company">Mindbody</p>
                   <p class="experience-description">
-                    Leading digital experiences for international brands with
-                    focus on cultural authenticity and innovative interfaces.
-                    Specialized in bridging Eastern and Western design
-                    sensibilities through interactive storytelling.
-                  </p>
-                </div>
-
-                <div
-                  class="experience-item interactive"
-                  data-cursor-text="Explore Role"
-                >
-                  <div class="experience-year">2020</div>
-                  <h3 class="experience-role">UX Designer</h3>
-                  <p class="experience-company">Digital Solutions</p>
-                  <p class="experience-description">
-                    Designed user-centered digital products with focus on East
-                    Asian markets and cross-cultural user experiences. Led a
-                    team of designers creating multilingual applications with
-                    culturally appropriate interactions.
-                  </p>
-                </div>
-
-                <div
-                  class="experience-item interactive"
-                  data-cursor-text="Explore Role"
-                >
-                  <div class="experience-year">2018</div>
-                  <h3 class="experience-role">Frontend Developer</h3>
-                  <p class="experience-company">WebTech Agency</p>
-                  <p class="experience-description">
-                    Built responsive web applications and e-commerce platforms
-                    for clients in the APAC region. Specialized in performance
-                    optimization and localization for Chinese, Japanese and
-                    Korean markets.
-                  </p>
-                </div>
-
-                <div
-                  class="experience-item interactive"
-                  data-cursor-text="Explore Role"
-                >
-                  <div class="experience-year">2016</div>
-                  <h3 class="experience-role">Digital Designer</h3>
-                  <p class="experience-company">Creative Studio</p>
-                  <p class="experience-description">
-                    Created visual identities and digital assets for brands
-                    looking to expand into Asian markets. Focused on maintaining
-                    cultural authenticity while achieving modern design
-                    aesthetics.
+                    Created an AI-powered booking assistant using React,
+                    Node.js, and LangChain, automating class scheduling and
+                    resolving conflicts. Developed a recommendation engine with
+                    LLMs that increased class bookings by 20%.
                   </p>
                 </div>
               </div>
@@ -2833,7 +2889,7 @@
               data-cursor-text="Seattle"
             >
               <img
-                src="https://picsum.photos//400/600"
+                src="https://picsum.photos/400/600"
                 alt="Seattle cityscape at dusk"
                 class="about-image"
               />
@@ -3018,7 +3074,10 @@
 
           // Setup welcome screen
           setupWelcome() {
-            this.enterButton.addEventListener("click", () => {
+            // Replace the reference to the old enter button with the portfolio button
+            this.portfolioButton = document.getElementById("portfolio-button");
+
+            this.portfolioButton.addEventListener("click", () => {
               this.welcomeScreen.style.opacity = "0";
               // Remove welcome-active class when entering
               document.body.classList.remove("welcome-active");
@@ -3026,8 +3085,8 @@
                 this.welcomeScreen.style.display = "none";
               }, 1000);
 
-              // Create ripple effect
-              const rect = this.enterButton.getBoundingClientRect();
+              // Create ripple effect at the center of the portfolio button
+              const rect = this.portfolioButton.getBoundingClientRect();
               this.createRippleEffect(
                 rect.left + rect.width / 2,
                 rect.top + rect.height / 2,
@@ -3035,7 +3094,7 @@
               );
             });
 
-            // Add logo click handler to show welcome screen
+            // Also allow the logo click to bring back the welcome screen
             const logoContainer = document.querySelector(".logo-container");
             logoContainer.addEventListener("click", () => {
               if (this.welcomeScreen.style.display === "none") {
@@ -3069,12 +3128,31 @@
                 this.inkDroplets.forEach((d) => d.classList.remove("active"));
                 this.contentCards.forEach((c) => c.classList.remove("active"));
 
-                // Set new active state
+                // Set droplet active state immediately
                 droplet.classList.add("active");
-                card.classList.add("active");
-                this.activeCard = card;
 
-                // Create ripple effect
+                // Immediately add the "active" class to the card
+                card.classList.add("active");
+
+                // Force a reflow by reading a layout property
+                const dummy = card.offsetHeight; // forces reflow
+
+                // Use requestAnimationFrame to ensure the styles are flushed
+                requestAnimationFrame(() => {
+                  // Now update the background color immediately
+                  const body = document.body;
+                  if (section === "projects") {
+                    body.style.backgroundColor = "#f5eee5";
+                  } else if (section === "experience") {
+                    body.style.backgroundColor = "#e9f0ea";
+                  } else if (section === "education") {
+                    body.style.backgroundColor = "#f1eeef";
+                  } else if (section === "about") {
+                    body.style.backgroundColor = "#eee9e6";
+                  }
+                });
+
+                // Create ripple effect concurrently
                 const rect = droplet.getBoundingClientRect();
                 this.createRippleEffect(
                   rect.left + rect.width / 2,
@@ -3082,25 +3160,13 @@
                   getComputedStyle(droplet).background
                 );
 
-                // Update background colors based on section
-                const body = document.body;
-                if (section === "projects") {
-                  body.style.backgroundColor = "#f5eee5";
-                } else if (section === "experience") {
-                  body.style.backgroundColor = "#e9f0ea";
-                } else if (section === "education") {
-                  body.style.backgroundColor = "#f1eeef";
-                } else if (section === "about") {
-                  body.style.backgroundColor = "#eee9e6";
-                }
-
+                // Optionally reduce the isAnimating timeout to prevent blocking further interactions
                 setTimeout(() => {
                   this.isAnimating = false;
-                }, 1000);
+                }, 300); // reduced from 1000 ms
               });
             });
           },
-
           // Setup close buttons
           setupCloseButtons() {
             this.closeButtons.forEach((btn) => {
